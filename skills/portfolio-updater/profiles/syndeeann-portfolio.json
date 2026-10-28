@@ -3,7 +3,7 @@
   "site_url": "https://syndeeann.github.io/my-portfolio/",
   "site_repo": "https://github.com/syndeeann/my-portfolio",
   "skills_repo": "https://github.com/syndeeann/custom-claude-skills",
-  "live_branches": ["gh-pages"],
+  "live_branches": ["feature/portfolio-v4", "gh-pages"],
   "new_badge_days": 7,
   "delivered_status": "posted",
   "projects": {

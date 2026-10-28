@@ -33,7 +33,7 @@ data formats are in `references/data-formats.md`; how to call this from a pipeli
 ## 1. Get the site
 
 Clone or open the portfolio repo on its live branch (`live_branches` in the profile; for the owner's site that
-is `gh-pages`, not `master`). Run every command below from the repo root, or pass `--site DIR`. Add
+is `feature/portfolio-v4`, mirrored to `gh-pages`; never the stale `master`). Run every command below from the repo root, or pass `--site DIR`. Add
 `--profile syndeeann-portfolio` to each call.
 
 ## 2. Add what was delivered
