@@ -8,12 +8,14 @@
 <meta name="theme-color" content="#060814">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?{{FONTS}}&display=swap">
 <link rel="stylesheet" href="{{BASE}}/assets/base.css">
 <link rel="stylesheet" href="{{BASE}}/assets/studio.css">
+<link rel="stylesheet" href="{{BASE}}/assets/themes.css">
 {{ANALYTICS}}
 </head>
-<body>
+<body data-theme="{{THEME}}">
+<div class="deco" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
 <nav class="nav" aria-label="Main">
   <div class="wrap">
     <a class="brand" href="{{BASE}}/index.html"><span class="orb" aria-hidden="true"></span>Syndee Sevilla</a>
@@ -31,10 +33,12 @@
   <header class="studio-hero">
     <div class="wrap">
       <div class="crumbs"><a href="{{BASE}}/index.html">Portfolio</a><span class="sep">/</span><a href="{{BASE}}/index.html#studio">My AI Studio</a><span class="sep">/</span><span>{{NAME}}</span></div>
+      {{BADGE_HTML}}
       <h1>{{NAME}}</h1>
       <p data-studio-tagline>{{DESCRIPTION}}</p>
       <div class="studio-stats" data-studio-count aria-live="polite"></div>
     </div>
+    {{TICKER_HTML}}
   </header>
 
   <section class="band" id="outputs" style="padding-top: 0">

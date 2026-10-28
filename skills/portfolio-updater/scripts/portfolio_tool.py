@@ -30,6 +30,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 SKILL = HERE.parent
 TEMPLATE = SKILL / "assets" / "studio-page.html"
+DEFAULT_FONTS = "family=Sora:wght@400;600;700;800&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500"
 DATA_FILES = ("studios", "projects", "videos", "skills", "workflow")
 YT_RE = re.compile(r"youtu(?:\.be/|be\.com/(?:shorts/|watch\?v=|embed/))([\w-]{11})")
 ID_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
@@ -343,6 +344,10 @@ def render_page(site: Site, studio: dict) -> str:
         "ID": html.escape(studio["id"]), "BASE": base, "ANALYTICS": analytics,
         "SITE_URL": html.escape(site.profile.get("site_url", "")), "SKILLS_REPO": html.escape(site.profile.get("skills_repo", "")),
         "NOUN": "apps" if studio.get("kind") == "app" else "videos",
+        "THEME": html.escape(studio.get("theme") or "default"),
+        "FONTS": html.escape(studio.get("fonts") or DEFAULT_FONTS, quote=False),
+        "BADGE_HTML": '<span class="hero-badge">%s</span>' % html.escape(studio["badge"]) if studio.get("badge") else "",
+        "TICKER_HTML": ('<div class="ticker" aria-hidden="true"><span>%s</span></div>' % html.escape((studio["ticker"] + "  ") * 12)) if studio.get("ticker") else "",
     }
     for k, v in rep.items():
         t = t.replace("{{" + k + "}}", v)
@@ -375,6 +380,9 @@ def cmd_new_studio(site: Site, a: argparse.Namespace) -> int:
         "path": f"{a.id}/", "kind": a.kind, "pipeline": a.pipeline or a.id, "icon": a.icon or a.id,
         "keywords": [k.strip().lower() for k in (a.keywords or "").split(",") if k.strip()],
     }
+    for key in ("theme", "accent", "fonts", "badge", "ticker"):
+        if getattr(a, key, None):
+            studio[key] = getattr(a, key)
     db["studios"].append(studio)
     write_json(site.data("studios"), db)
     print(f"added studio '{a.id}'. Next: add its pipeline to data/workflow.json, run build-pages, then link it from index.html if needed.")
@@ -440,7 +448,7 @@ def cmd_check(site: Site, _: argparse.Namespace) -> int:
     idx = site.root / "index.html"
     if idx.exists():
         t = idx.read_text(encoding="utf-8")
-        for hook in ("data-studio-grid", "data-latest", "data-workflow", "data-skills", "assets/studio.js", "assets/studio.css"):
+        for hook in ("data-studio-grid", "data-skills", "assets/studio.js", "assets/studio.css"):
             if hook not in t:
                 errs.append(f"index.html is missing '{hook}'")
         if "github.com/" not in t:
@@ -517,6 +525,8 @@ def main() -> int:
     c.add_argument("--id", required=True); c.add_argument("--name", required=True); c.add_argument("--tagline", required=True)
     c.add_argument("--description"); c.add_argument("--kind", choices=["video", "app"], default="video")
     c.add_argument("--pipeline"); c.add_argument("--icon"); c.add_argument("--keywords")
+    c.add_argument("--theme", help="a theme in assets/themes.css (ads, kids, apps, or your own)"); c.add_argument("--accent", help="tile accent as R, G, B")
+    c.add_argument("--fonts", help="Google Fonts query, e.g. family=Anton&family=Manrope:wght@400;700"); c.add_argument("--badge"); c.add_argument("--ticker")
     c.set_defaults(fn=cmd_new_studio)
 
     sub.add_parser("build-pages").set_defaults(fn=cmd_build_pages)

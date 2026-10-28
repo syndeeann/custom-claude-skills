@@ -13,6 +13,7 @@ writes them. Edit by hand only when the tool has no command for it.
 
 - `path` ending in `/` means a generated page at `<path>index.html`. A path ending in `.html` is a hand-built
   page; list it under `legacy_pages` in the profile so `build-pages` leaves it alone.
+- `theme` picks the studio's look in `assets/themes.css` (`body[data-theme=...]`: ads, kids and apps exist). `accent` (`R, G, B`) tints its tile on the home page. `fonts` is a Google Fonts query for the page. `badge` and `ticker` are optional hero extras (the ads theme uses both). A new studio needs its own theme block in `themes.css` to look different; without one it gets the default look.
 - `kind` is `video` or `app`; it only changes the card layout and the wording.
 - `keywords` drive classification when no project rule applies. Multi-word phrases count double.
 
@@ -46,8 +47,9 @@ Source of truth is each skill's `metadata` in `SKILL.md`: `title`, `role`, `summ
 
 ## workflow.json
 
-`{ "pipelines": { "<id>": { "title", "intro", "note", "steps": [ { "title", "text", "skills": [ids], "tools": [names] } ] } } }`
-A studio's `pipeline` points at one of these.
+`{ "pipelines": { "<id>": { "title", "intro", "note", "trigger", "run_label", "start_log", "end_log", "claude_does", "i_do", "steps": [ ... ] } } }`
+A studio's `pipeline` points at one of these. Each step: `title`, `text`, `tag` (short label such as QUALITY), `log` (line shown when the sample run reaches it), `skills` (ids), `tools` (names). A step can add `warn` and `loop: { "to": step index, "label", "log" }` to show a failed check sending the run back to an earlier step.
+The studio page draws these as the same pipeline diagram as the Kwento: Kilabot studio: a snake of step cards joined by wires, a Run button, a run log and a detail panel.
 
 ## Hand-built pages
 

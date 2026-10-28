@@ -68,7 +68,7 @@ Use `--republish` only when the owner wants the badge restarted.
   `data/skills.json` from each skill's `metadata` (title, role, summary, responsibilities, projects, order).
   A skill that lacks those fields shows with a plain fallback and a warning; fill them in.
 - A new kind of output: `new-studio --id ID --name NAME --tagline TEXT --kind video|app --keywords a,b,c`
-  adds it to My AI Studio and generates its page at `ID/`. Then add its pipeline to `data/workflow.json`.
+  adds it to My AI Studio and generates its page at `ID/`. Add `--theme NAME` (and `--accent`, `--fonts`) and write a matching `body[data-theme="NAME"]` block in the site's `themes.css` so the studio has its own vibe. Then add its pipeline to `data/workflow.json`.
 - Changed template or styles: `build-pages` regenerates every generated studio page. Hand-built pages
   (listed under `legacy_pages` in the profile) are never overwritten; the tool only edits the video list
   between their marker comments.
