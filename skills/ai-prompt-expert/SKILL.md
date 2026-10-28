@@ -2,6 +2,15 @@
 name: ai-prompt-expert
 description: "Turns a video script or narration into clean, copy-ready generation prompts for Google Flow (Veo, Omni) and other AI video generators, built for real-life, photoreal footage. Every prompt shows what its narration line says, keeps on-screen people from lip-syncing an off-screen narrator, avoids repeated words, and follows the platform's own prompting guidance; a lint step checks all of it before the prompts are saved to video-projects/PROJECT/prompts/ in the owner's GitHub repo and pushed. Use it whenever the user wants prompts for Flow, Veo, Omni, Runway, Kling, Sora or any AI video tool, wants a script's visuals turned into prompts, or says a generated clip looks fake, shows the wrong picture, has subtitles or has people talking, in any project (Kwento: Kilabot, TikTok Shop ads, or a new one)."
 metadata:
+  title: AI Prompt Expert
+  role: Video prompt engineer
+  order: 2
+  summary: "Turns a script into clean, photoreal prompts for Google Flow and other AI video generators."
+  responsibilities:
+    - "Writes one prompt per clip with no repeated words"
+    - "Shows on screen what the narrator says"
+    - "Keeps the on-screen character from dubbing the narrator"
+    - "Keeps looks consistent with reusable character and place descriptions"
   category: content
   version: "1.0.0"
   media: video

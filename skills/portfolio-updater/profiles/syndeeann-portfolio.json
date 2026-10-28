@@ -1,0 +1,34 @@
+{
+  "_about": "Project-specific rules for the owner's portfolio. Everything the script needs to know about this particular site lives here, not in portfolio_tool.py.",
+  "site_url": "https://syndeeann.github.io/my-portfolio/",
+  "site_repo": "https://github.com/syndeeann/my-portfolio",
+  "skills_repo": "https://github.com/syndeeann/custom-claude-skills",
+  "live_branches": ["gh-pages"],
+  "new_badge_days": 7,
+  "delivered_status": "posted",
+  "projects": {
+    "kwento-kilabot": {
+      "name": "Kwento: Kilabot",
+      "studio": "stories",
+      "language": "Tagalog",
+      "brief_match": { "facebook_page": "Kwento: Kilabot" },
+      "summary": "Tagalog horror stories based on Filipino folklore, posted to Facebook and YouTube.",
+      "title_regex": "^.*?#(?P<n>\\d+):\\s*(?P<title>.+?)\\s+[—-]\\s+(?P<desc>.+)$"
+    },
+    "tiktok-shop-ads": {
+      "name": "TikTok Shop Ads",
+      "studio": "ads",
+      "language": "Taglish",
+      "summary": "Taglish UGC-style affiliate ads for TikTok Shop products."
+    }
+  },
+  "legacy_pages": {
+    "stories": {
+      "page": "studio/kwento-kilabot.html",
+      "begin": "/* portfolio-updater:videos:begin */",
+      "end": "/* portfolio-updater:videos:end */",
+      "line": "    { n: {n}, id: {youtube_id_js}, title: {title_js}, folk: {folk_js}, dur: {dur_js}, sum: {desc_js}, pub: {published_js} },",
+      "newest_first": true
+    }
+  }
+}

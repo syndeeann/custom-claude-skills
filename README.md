@@ -20,6 +20,12 @@ The list below is generated from each skill's `SKILL.md`. Don't edit it by hand:
 |---|---|---|---|---|
 | [`ai-prompt-expert`](skills/ai-prompt-expert/SKILL.md) | Turns a video script or narration into clean, copy-ready generation prompts for Google Flow (Veo, Omni) and other AI video generators, built for real-life, photoreal foo… | video | kwento-kilabot, tiktok-shop-ads | 1.0.0 |
 | [`storyteller`](skills/storyteller/SKILL.md) | Writes detailed, specific, uncommon video scripts — a hook, beat-by-beat narration, and a ready-to-use visual prompt for every clip — for short-form and AI-generated vid… | text | kwento-kilabot, tiktok-shop-ads | 1.0.0 |
+
+### Automation
+
+| Skill | What it does | Media | Projects | Version |
+|---|---|---|---|---|
+| [`portfolio-updater`](skills/portfolio-updater/SKILL.md) | Updates the owner's static GitHub Pages portfolio every time a new video or app is delivered: adds it to the right studio in My AI Studio (Ads Videos, Kids, Stories, App… | web | kwento-kilabot, tiktok-shop-ads, portfolio | 1.0.0 |
 <!-- skills:end -->
 
 ## Layout

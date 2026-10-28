@@ -2,6 +2,15 @@
 name: storyteller
 description: "Writes detailed, specific, uncommon video scripts — a hook, beat-by-beat narration, and a ready-to-use visual prompt for every clip — for short-form and AI-generated video (Reels, Shorts, TikTok, Google Flow/Veo clips), then saves each one to video-projects/PROJECT/script/ in the owner's GitHub repo and pushes it. Picks an angle the audience hasn't seen before, checks every line for length, repeated words and clichés, and keeps facts honest. Use it whenever the user wants a video script, story, narration, voice-over, horror story, ad script or a new video idea written, in any project (Kwento: Kilabot, TikTok Shop ads, or a new one), even if they only say \"write the next script\" or \"give me a story about X\"."
 metadata:
+  title: Storyteller
+  role: Script writer
+  order: 1
+  summary: "Writes detailed, uncommon video scripts: a hook, beat-by-beat narration and a visual prompt for every clip."
+  responsibilities:
+    - "Picks an angle the audience has not seen before"
+    - "Writes narration clip by clip within the word budget"
+    - "Checks every line for clichés and repeated words"
+    - "Saves the script to the project folder on GitHub"
   category: content
   version: "1.0.0"
   media: text

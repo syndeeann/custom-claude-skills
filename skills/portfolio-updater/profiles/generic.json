@@ -1,0 +1,10 @@
+{
+  "_about": "Defaults for any site that follows the data/*.json layout. Copy to profiles/<site>.json and fill in.",
+  "site_url": "",
+  "skills_repo": "",
+  "live_branches": ["main"],
+  "new_badge_days": 7,
+  "delivered_status": "posted",
+  "projects": {},
+  "legacy_pages": {}
+}

@@ -2,6 +2,15 @@
 name: flow-clip-qa
 description: "Quality-assurance check for video clips made with Google Flow (Veo, Omni) — raw clips, a folder of downloads, or an assembled Reel/ad with its cut list. Runs automatic checks (format, black/frozen frames, missing or cut-off narration, sync, duplicate clips, repeated words in the script) plus a visual review of contact sheets (wrong scene, text/watermarks, garbled faces or hands, morphing products, lip-sync \"dubbing\"), then gives a pass/fail verdict with the cheapest fix for each failing clip. Use it whenever the user wants Flow or other AI-generated video clips checked, reviewed, QC'd or approved before editing or posting — in any project (Kwento: Kilabot, TikTok Shop ads, or a new one), even if they only say \"check these clips\" or \"is this video ready to post?\"."
 metadata:
+  title: Flow Clip QA
+  role: Quality gate
+  order: 3
+  summary: "Checks Google Flow clips and finished reels, then gives a pass or fail verdict with the cheapest fix."
+  responsibilities:
+    - "Runs automatic checks for format, black or frozen frames and cut-off narration"
+    - "Reviews contact sheets for wrong scenes, text, watermarks and garbled faces"
+    - "Spots lip-sync dubbing and repeated words"
+    - "Reports a verdict with evidence, and never posts or regenerates"
   category: qa
   version: "1.0.0"
   media: video

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en" data-base="{{BASE}}" data-studio="{{ID}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{NAME}} · Syndee Ann Sevilla</title>
+<meta name="description" content="{{DESCRIPTION}}">
+<meta name="theme-color" content="#060814">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="{{BASE}}/assets/base.css">
+<link rel="stylesheet" href="{{BASE}}/assets/studio.css">
+{{ANALYTICS}}
+</head>
+<body>
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="{{BASE}}/index.html"><span class="orb" aria-hidden="true"></span>Syndee Sevilla</a>
+    <ul class="menu">
+      <li><a href="#outputs">Outputs</a></li>
+      <li><a href="#workflow">Workflow</a></li>
+      <li><a href="#skills">Skills used</a></li>
+      <li><a href="#studios">Other studios</a></li>
+    </ul>
+    <a class="hire" href="{{BASE}}/index.html#studio">All studios</a>
+  </div>
+</nav>
+
+<main>
+  <header class="studio-hero">
+    <div class="wrap">
+      <div class="crumbs"><a href="{{BASE}}/index.html">Portfolio</a><span class="sep">/</span><a href="{{BASE}}/index.html#studio">My AI Studio</a><span class="sep">/</span><span>{{NAME}}</span></div>
+      <h1>{{NAME}}</h1>
+      <p data-studio-tagline>{{DESCRIPTION}}</p>
+      <div class="studio-stats" data-studio-count aria-live="polite"></div>
+    </div>
+  </header>
+
+  <section class="band" id="outputs" style="padding-top: 0">
+    <div class="wrap">
+      <div class="head">
+        <span class="log"><b>&gt;</b> latest {{NOUN}} first</span>
+        <h2>What this studio has made</h2>
+        <p>Newly published work carries a NEW badge for its first 7 days.</p>
+      </div>
+      <div data-outputs><div class="studio-state">Loading…</div></div>
+    </div>
+  </section>
+
+  <section class="band" id="workflow" style="padding-top: 0">
+    <div class="wrap">
+      <div class="head">
+        <span class="log"><b>&gt;</b> how it is made</span>
+        <h2>The workflow</h2>
+        <p>Every step, and the Claude skills that do the work.</p>
+      </div>
+      <div data-workflow></div>
+    </div>
+  </section>
+
+  <section class="band" id="skills" style="padding-top: 0">
+    <div class="wrap">
+      <div class="head">
+        <span class="log"><b>&gt;</b> skills in this pipeline</span>
+        <h2>Claude skills used here</h2>
+        <p>Each one has a single job. Open a skill to read its instructions on GitHub.</p>
+      </div>
+      <div class="skill-cards" data-skills-used></div>
+      <p class="skills-cta" style="margin-top: 28px"><a class="btn go" href="{{SKILLS_REPO}}" target="_blank" rel="noopener">See all skills on GitHub ↗</a></p>
+    </div>
+  </section>
+
+  <section class="band" id="studios" style="padding-top: 0">
+    <div class="wrap">
+      <div class="head"><h2>More from My AI Studio</h2></div>
+      <div class="studio-grid" data-other-studios></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Syndee Ann Sevilla</span>
+    <span><a href="{{BASE}}/index.html#studio">Back to the portfolio</a></span>
+  </div>
+</footer>
+<script src="{{BASE}}/assets/studio.js" defer></script>
+</body>
+</html>
