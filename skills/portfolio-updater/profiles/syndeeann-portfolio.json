@@ -3,7 +3,10 @@
   "site_url": "https://syndeeann.github.io/my-portfolio/",
   "site_repo": "https://github.com/syndeeann/my-portfolio",
   "skills_repo": "https://github.com/syndeeann/custom-claude-skills",
-  "live_branches": ["feature/portfolio-v4", "gh-pages"],
+  "live_branches": [
+    "feature/portfolio-v4",
+    "gh-pages"
+  ],
   "new_badge_days": 7,
   "delivered_status": "posted",
   "projects": {
@@ -11,7 +14,9 @@
       "name": "Kwento: Kilabot",
       "studio": "stories",
       "language": "Tagalog",
-      "brief_match": { "facebook_page": "Kwento: Kilabot" },
+      "brief_match": {
+        "facebook_page": "Kwento: Kilabot"
+      },
       "summary": "Tagalog horror stories based on Filipino folklore, posted to Facebook and YouTube.",
       "title_regex": "^.*?#(?P<n>\\d+):\\s*(?P<title>.+?)\\s+[—-]\\s+(?P<desc>.+)$"
     },
@@ -29,6 +34,15 @@
       "end": "/* portfolio-updater:videos:end */",
       "line": "    { n: {n}, id: {youtube_id_js}, title: {title_js}, folk: {folk_js}, dur: {dur_js}, sum: {desc_js}, pub: {published_js} },",
       "newest_first": true
+    }
+  },
+  "analytics": {
+    "guide": "docs/ANALYTICS.md",
+    "sections": {
+      "outputs": "studio_outputs",
+      "skills": "skills_used",
+      "studios": "other_studios",
+      "claude-skills": "claude_skills"
     }
   }
 }

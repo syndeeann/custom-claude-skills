@@ -1,6 +1,6 @@
 ---
 name: portfolio-updater
-description: "Updates the owner's static GitHub Pages portfolio every time a new video or app is delivered: adds it to the right studio in My AI Studio (Ads Videos, Kids, Stories, Applications), shows a NEW badge for its first 7 days, keeps each studio's own page, the workflow section and the Claude skills section (with a GitHub button) current, then pushes to the live branch. Use it whenever a video has been posted or delivered, a new app is finished, a skill was added or changed, or the user says update my portfolio, add this to my studio, show my latest video or add a new studio, in any project (Kwento: Kilabot, TikTok Shop ads, kids, apps)."
+description: "Updates the owner's static GitHub Pages portfolio every time a new video or app is delivered: adds it to the right studio in My AI Studio (Ads Videos, Kids, Stories, Applications), shows a NEW badge for its first 7 days, keeps each studio's own page, the workflow section, the Claude skills section (with a GitHub button), analytics, the Tag Manager export and the Looker Studio guide current, then pushes to the live branch. Use it whenever a video has been posted or delivered, a new app is finished, a skill was added or changed, or the user says update my portfolio, add this to my studio, show my latest video or add a new studio, in any project (Kwento: Kilabot, TikTok Shop ads, kids, apps)."
 metadata:
   title: Portfolio Updater
   role: Portfolio publisher
@@ -11,9 +11,10 @@ metadata:
     - "Classifies it into Ads, Kids, Stories or Applications"
     - "Shows a NEW badge for 7 days after it is published"
     - "Keeps each studio page, the workflow and the skills showcase up to date"
+    - "Keeps analytics, the Tag Manager export and the Looker Studio guide in step, and lists the manual steps left"
     - "Pushes the update to the live branch and checks it"
   category: automation
-  version: "1.0.0"
+  version: "1.1.0"
   media: web
   projects: [kwento-kilabot, tiktok-shop-ads, portfolio]
 ---
@@ -75,7 +76,30 @@ Use `--republish` only when the owner wants the badge restarted.
 - Workflow steps live in `data/workflow.json`. Name the skills that really run in each step, by id. Do not
   list a skill that the pipeline does not use.
 
-## 4. Check, then publish
+## 4. Keep analytics current
+
+The site reports to Google Tag Manager, then GA4, then a Looker Studio report. Every `publish` runs
+`analytics sync` first, and you can run it alone (`analytics sync`, `analytics check`). It keeps what lives in
+the repo in step with the site, without being asked:
+
+- The site's `analytics.js`: only the blocks between the `portfolio-updater` marker comments (the studio page list
+  and the extra section names). The rest of that file is the owner's.
+- The Tag Manager container export in `docs/`: a trigger and a tag for every event the site's code sends, and a
+  variable for every parameter, copied from the existing ones. A tag that gains a parameter is updated.
+- `docs/ANALYTICS.md`: one marked section listing the studios, their `workflow_name`, the events, and the
+  Looker Studio charts to add. Nothing else in that file is touched.
+- Studio pages: each carries its `workflow_name` so GA4 can split every report by studio.
+
+The skill cannot open GA4, Tag Manager or Looker Studio. When something there needs a person (import the
+changed container and publish it, register a new custom dimension, check the Looker Studio Workflow filter),
+`analytics sync`, `check` and `publish` print it under PENDING MANUAL STEPS and the same list is written into
+the guide. Always pass that list on to the owner in your reply. When the owner says they did them, run
+`analytics confirm --all` (or `--gtm`, `--ga4`, `--looker` for part of it) so the list resets.
+
+If you add code that sends a new event, call it as `track('event_name', { parameter: value })`. The parameter
+must also be in the `KEYS` list in `analytics.js`; sync then adds the tag, trigger and variables.
+
+## 5. Check, then publish
 
 ```
 python scripts/portfolio_tool.py --site SITE --profile syndeeann-portfolio check
@@ -83,8 +107,8 @@ python scripts/portfolio_tool.py --site SITE --profile syndeeann-portfolio publi
 ```
 
 `check` must say OK: valid JSON, every item in a real studio, every studio page present, every skill named in a
-workflow present, and the home page hooks intact. `publish` runs `check` again, commits, and pushes to each
-live branch. Add the commit trailers the session asks for to the message.
+workflow present, and the home page hooks intact. `publish` syncs analytics, runs `check` again, commits, and pushes to each
+live branch (one fast-forward commit per branch, so a branch with its own history is never overwritten). Add the commit trailers the session asks for to the message.
 
 After pushing, open the live page when you can (GitHub Pages takes a minute or two) and look for the NEW badge
 on the new card, the studio count, and the studio page. Say plainly if you could not check it.
@@ -93,6 +117,6 @@ on the new card, the studio count, and the studio page. Say plainly if you could
 
 - Only delivered work goes on the portfolio. Private drafts, unposted renders and failed QC stay off.
 - Never commit video files. The site links to YouTube or another host; posters come from the host's thumbnail.
-- Never edit `analytics.js`, the analytics docs or the owner's CV and photo files.
+- Edit `analytics.js` and `docs/ANALYTICS.md` only through `analytics sync` (marked blocks). Never touch the owner's CV and photo files.
 - Data is rendered as text, never as markup. Do not paste HTML into titles or descriptions.
 - Report what changed: the item, its studio, its date, and what you could not verify.

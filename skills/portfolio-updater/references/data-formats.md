@@ -14,6 +14,7 @@ writes them. Edit by hand only when the tool has no command for it.
 - `path` ending in `/` means a generated page at `<path>index.html`. A path ending in `.html` is a hand-built
   page; list it under `legacy_pages` in the profile so `build-pages` leaves it alone.
 - `theme` picks the studio's look in `assets/themes.css` (`body[data-theme=...]`: ads, kids and apps exist). `accent` (`R, G, B`) tints its tile on the home page. `fonts` is a Google Fonts query for the page. `badge` and `ticker` are optional hero extras (the ads theme uses both). A new studio needs its own theme block in `themes.css` to look different; without one it gets the default look.
+- `analytics_name` (optional) is the `workflow_name` GA4 reports for the studio; it defaults to the id (`-` becomes `_`). Kwento: Kilabot uses `kwento_kilabot`.
 - `kind` is `video` or `app`; it only changes the card layout and the wording.
 - `keywords` drive classification when no project rule applies. Multi-word phrases count double.
 

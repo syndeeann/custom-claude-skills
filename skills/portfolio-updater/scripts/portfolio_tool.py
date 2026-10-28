@@ -9,7 +9,8 @@
     new-studio   --id ID --name N --tagline T [--kind video|app] [--keywords a,b]
     build-pages                                                 (re)generate every studio page from the template
     check                                                       verify the data, the pages and the hooks
-    publish      --message M [--dry-run]                        commit and push to the live branch(es)
+    analytics    sync | check | confirm [--gtm --ga4 --looker]   keep analytics, Tag Manager export and Looker guide current
+    publish      --message M [--dry-run]                        sync analytics, check, commit, push to the live branch(es)
 
 The site is a static page set that renders data/*.json in the browser (assets/studio.js). Nothing here knows
 about a particular project: project rules live in profiles/<site>.json and the site's own data/*.json.
@@ -345,6 +346,7 @@ def render_page(site: Site, studio: dict) -> str:
         "SITE_URL": html.escape(site.profile.get("site_url", "")), "SKILLS_REPO": html.escape(site.profile.get("skills_repo", "")),
         "NOUN": "apps" if studio.get("kind") == "app" else "videos",
         "THEME": html.escape(studio.get("theme") or "default"),
+        "WORKFLOW": workflow_name(studio),
         "FONTS": html.escape(studio.get("fonts") or DEFAULT_FONTS, quote=False),
         "BADGE_HTML": '<span class="hero-badge">%s</span>' % html.escape(studio["badge"]) if studio.get("badge") else "",
         "TICKER_HTML": ('<div class="ticker" aria-hidden="true"><span>%s</span></div>' % html.escape((studio["ticker"] + "  ") * 12)) if studio.get("ticker") else "",
@@ -366,6 +368,8 @@ def cmd_build_pages(site: Site, _: argparse.Namespace) -> int:
         n += 1
         print(f"wrote {s['path']}index.html")
     print(f"{n} studio page(s) generated")
+    for c in analytics(site, write=True)[0]:
+        print("changed:", c)
     return 0
 
 
@@ -456,6 +460,10 @@ def cmd_check(site: Site, _: argparse.Namespace) -> int:
     else:
         errs.append("index.html is missing")
     print(f"{len(d['videos']['items'])} item(s), {fresh} inside the {days}-day NEW window, {len(studios)} studio(s), {len(skills)} skill(s)")
+    a_changes, a_pending, a_errors = analytics(site, write=False)
+    errs += a_errors
+    errs += [f"analytics out of date: {c} (run: analytics sync)" for c in a_changes]
+    warns += [f"manual step pending: {p_}" for p_ in a_pending]
     return report(errs, warns)
 
 
@@ -468,14 +476,314 @@ def report(errs: list[str], warns: list[str]) -> int:
     return 1 if errs else 0
 
 
+# ------------------------------------------------------------------------------------------------- analytics
+# The site sends events to Google Tag Manager (data layer) -> GA4 -> Looker Studio. This section keeps everything
+# that lives in the repo in step with the site: assets/analytics.js (marked blocks only), the Tag Manager container
+# export in docs/, and the tracking guide docs/ANALYTICS.md (one marked block). It cannot change GA4, Tag Manager
+# or Looker Studio themselves; anything the owner still has to do there is listed as "pending manual steps".
+BUILTIN_PARAMS = {"link_text", "link_url", "video_title", "video_url", "video_provider", "video_percent",
+                  "video_current_time", "video_duration"}
+BASE_PARAMS = ["page_type", "workflow_name", "site_version"]
+DOC_BEGIN, DOC_END = "<!-- portfolio-updater:begin -->", "<!-- portfolio-updater:end -->"
+
+
+def block(text: str, begin: str, end: str, body: str | None = None) -> tuple[str, str | None]:
+    """Return (text with the marked block replaced by body, the old body). body None = just read it."""
+    i, j = text.find(begin), text.find(end)
+    if i < 0 or j < 0 or j < i:
+        return text, None
+    old = text[i + len(begin):j]
+    if body is None:
+        return text, old
+    return text[:i + len(begin)] + body + text[j:], old
+
+
+def workflow_name(studio: dict) -> str:
+    return studio.get("analytics_name") or studio["id"].replace("-", "_")
+
+
+def gtm_file(site: Site) -> Path | None:
+    found = sorted((site.root / "docs").glob("gtm-container-*.json")) if (site.root / "docs").exists() else []
+    return found[0] if found else None
+
+
+def scan_events(site: Site) -> dict[str, set]:
+    """Every event the site's own code sends: name -> parameter names seen next to it."""
+    events: dict[str, set] = {}
+    pat = re.compile(r"\b(?:track|T)\(\s*'([a-z][a-z0-9_]*)'\s*(?:,\s*\{([^}]*)\})?")
+    files = [p for p in list(site.root.rglob("*.js")) + list(site.root.rglob("*.html"))
+             if ".git" not in p.parts and "docs" not in p.parts]
+    for f in files:
+        for m in pat.finditer(f.read_text(encoding="utf-8", errors="ignore")):
+            events.setdefault(m.group(1), set()).update(re.findall(r"(\w+)\s*:", m.group(2) or ""))
+    return events
+
+
+def analytics_keys(js_text: str) -> list[str]:
+    m = re.search(r"var KEYS = \[(.*?)\];", js_text, re.S)
+    return re.findall(r"'([a-z_]+)'", m.group(1)) if m else []
+
+
+def gtm_new_ids(cv: dict) -> dict:
+    mx = lambda key, idk: max([int(x[idk]) for x in cv.get(key, [])] or [0])
+    return {"tag": mx("tag", "tagId"), "trigger": mx("trigger", "triggerId"), "variable": mx("variable", "variableId")}
+
+
+def sync_gtm(site: Site, events: dict[str, set], keys: list[str], write: bool) -> tuple[list[str], list[str]]:
+    """Make sure the container export has a trigger + tag per event and a variable per parameter."""
+    path = gtm_file(site)
+    if not path:
+        return [], ["no docs/gtm-container-*.json found, so Tag Manager cannot be checked"]
+    raw = path.read_text(encoding="utf-8")
+    data = json.loads(raw)
+    cv = data["containerVersion"]
+    ids = gtm_new_ids(cv)
+    tags = {t["name"]: t for t in cv["tag"]}
+    trigs = {t["name"]: t for t in cv["trigger"]}
+    vars_ = {v["name"]: v for v in cv["variable"]}
+    changes: list[str] = []
+    base_tag = next((t for t in cv["tag"] if t["name"].startswith("GA4 - Event - ")), None)
+    base_trig = next((t for t in cv["trigger"] if t["name"].startswith("CE - ")), None)
+    base_var = next((v for v in cv["variable"] if v["name"].startswith("DLV - ")), None)
+    if not (base_tag and base_trig and base_var):
+        return [], ["the container has no example tag, trigger or variable to copy from"]
+
+    def need_var(param: str) -> str:
+        if f"DLV - {param}" not in vars_:
+            ids["variable"] += 1
+            v = json.loads(json.dumps(base_var))
+            v.update({"variableId": str(ids["variable"]), "name": f"DLV - {param}"})
+            for prm in v["parameter"]:
+                if prm["key"] == "name":
+                    prm["value"] = param
+            cv["variable"].append(v); vars_[v["name"]] = v
+            changes.append(f"Tag Manager: added variable DLV - {param}")
+        return "{{DLV - %s}}" % param
+
+    for p_ in BASE_PARAMS + [k for k in keys]:
+        need_var(p_)
+    for ev, seen in sorted(events.items()):
+        wanted = [k for k in keys if k in seen and k not in BASE_PARAMS]
+        if f"CE - {ev}" not in trigs:
+            ids["trigger"] += 1
+            tg = json.loads(json.dumps(base_trig))
+            tg.update({"triggerId": str(ids["trigger"]), "name": f"CE - {ev}"})
+            tg["customEventFilter"][0]["parameter"][1]["value"] = ev
+            cv["trigger"].append(tg); trigs[tg["name"]] = tg
+            changes.append(f"Tag Manager: added trigger CE - {ev}")
+        tag = tags.get(f"GA4 - Event - {ev}")
+        if not tag:
+            ids["tag"] += 1
+            tag = json.loads(json.dumps(base_tag))
+            tag.update({"tagId": str(ids["tag"]), "name": f"GA4 - Event - {ev}", "firingTriggerId": [trigs[f"CE - {ev}"]["triggerId"]]})
+            for prm in tag["parameter"]:
+                if prm["key"] == "eventName":
+                    prm["value"] = ev
+                if prm["key"] == "eventSettingsTable":
+                    prm["list"] = []
+            cv["tag"].append(tag); tags[tag["name"]] = tag
+            changes.append(f"Tag Manager: added tag GA4 - Event - {ev}")
+        table = next(prm for prm in tag["parameter"] if prm["key"] == "eventSettingsTable")
+        have = {next(m["value"] for m in row["map"] if m["key"] == "parameter") for row in table["list"]}
+        for param in BASE_PARAMS + wanted:
+            if param not in have:
+                table["list"].append({"type": "MAP", "map": [{"type": "TEMPLATE", "key": "parameter", "value": param},
+                                                              {"type": "TEMPLATE", "key": "parameterValue", "value": need_var(param)}]})
+                changes.append(f"Tag Manager: GA4 - Event - {ev} now sends {param}")
+    if changes and write:
+        ascii_ = "\\u00" in raw
+        path.write_text(json.dumps(data, indent=1, ensure_ascii=ascii_) + ("\n" if raw.endswith("\n") else ""), encoding="utf-8")
+    return changes, []
+
+
+def gtm_tags(path: Path | None) -> dict[str, list[str]]:
+    """Tag name -> the parameters it sends, from a container export."""
+    if not path or not path.exists():
+        return {}
+    out = {}
+    for t in json.loads(path.read_text(encoding="utf-8"))["containerVersion"]["tag"]:
+        table = next((p_ for p_ in t.get("parameter", []) if p_["key"] == "eventSettingsTable"), None)
+        out[t["name"]] = sorted(next(m["value"] for m in row["map"] if m["key"] == "parameter") for row in (table or {}).get("list", []))
+    return out
+
+
+def status_path(site: Site) -> Path:
+    return site.root / "docs" / "analytics-status.json"
+
+
+def doc_registered_dims(site: Site) -> list[str]:
+    doc = site.root / "docs" / "ANALYTICS.md"
+    if not doc.exists():
+        return []
+    m = re.search(r"## 3\. Register custom dimensions(.*?)\n## 4\.", doc.read_text(encoding="utf-8"), re.S)
+    return re.findall(r"\|\s*[^|]+\|\s*`([a-z_]+)`\s*\|", m.group(1)) if m else []
+
+
+def render_doc_block(site: Site, studios: list[dict], sections: dict, events: list[str], pending: list[str]) -> str:
+    today = date.today().isoformat()
+    rows = "\n".join(f"| {s['name']} | `{s['path']}` | `{workflow_name(s)}` | {s['kind']} |" for s in studios)
+    secs = ", ".join(f"`{v}`" for v in sorted(set(sections.values())))
+    pend = "\n".join(f"- [ ] {p}" for p in pending) if pending else "- None. GA4, Tag Manager and Looker Studio match the site."
+    wf = ", ".join(f"`{workflow_name(s)}`" for s in studios)
+    return f"""
+
+## 8. Studios and workflows (kept up to date by the portfolio-updater skill)
+
+Do not edit this section by hand: the skill rewrites it whenever it publishes. Last sync: {today}.
+
+Every studio page reports its own `workflow_name`, and clicks on a studio card or link send `workflow_open` with it.
+
+| Studio | Page | `workflow_name` | Kind |
+|---|---|---|---|
+{rows}
+
+- **Events the site sends:** {", ".join(f"`{e}`" for e in events)}. Each has a trigger and a tag in the Tag Manager container export in this folder.
+- **Studio page sections** report these extra `section_name` values: {secs}.
+- **In the studio pages:** playing a video or app preview in the page sends `video_start` (`video_source` = `on_page_player`, `link_group` = `studio_outputs`); the workflow diagram sends `ui_interaction` with `workflow_run` (`auto` or `button`) and `workflow_step_view` (the step, e.g. `quality`).
+
+**Looker Studio, page 4 (AI Studio).** Make the drop-down filter on **Workflow** list {wf}, then add:
+- Pivot table: rows Workflow, columns Event name, metric Event count, filter Event name in (`workflow_open`, `video_start`, `workflow_run`). This shows how far each studio takes a visitor.
+- Bar chart: Interaction label by Event count, filter Interaction type = `workflow_step_view`, with a Workflow control (which pipeline steps people open, per studio).
+- Table: Link text, Click platform, Event count, filter Click group = `skills_used` or `claude_skills` (which skills people open, and the GitHub button).
+
+**Pending manual steps** (only you can do these; the skill cannot reach GA4, Tag Manager or Looker Studio). Tick them off, then tell Claude "confirm analytics" so the list resets:
+{pend}
+"""
+
+
+def analytics(site: Site, write: bool = True) -> tuple[list[str], list[str], list[str]]:
+    """Return (changes, pending manual steps, errors). With write=False nothing is written: changes means drift."""
+    changes, errors = [], []
+    cfg = site.profile.get("analytics") or {}
+    studios = site.studios()
+    js_path = site.root / "assets" / "analytics.js"
+    if not js_path.exists():
+        return [], [], ["assets/analytics.js is missing; the site has no analytics to keep in step"] if cfg else ([], [], [])
+    js_text = js_path.read_text(encoding="utf-8")
+
+    # 1. analytics.js: the studio-page map and the extra section names
+    pages = {s["path"]: workflow_name(s) for s in studios}
+    body = "\n  var STUDIO_PAGES = {\n" + ",\n".join(f"    {js(k)}: {js(v)}".replace('"', "'") for k, v in pages.items()) + "\n  };\n  "
+    new_js, old = block(js_text, "/* portfolio-updater:studios:begin */", "/* portfolio-updater:studios:end */", body)
+    if old is None:
+        errors.append("analytics.js has no portfolio-updater:studios markers")
+    elif old != body:
+        changes.append("analytics.js: studio page list updated")
+    sections = cfg.get("sections", {})
+    sbody = "\n    " + ", ".join(f"{(k if re.fullmatch(r'[a-z]+', k) else js(k).replace(chr(34), chr(39)))}: {js(v).replace(chr(34), chr(39))}" for k, v in sections.items()) + "\n    "
+    new_js, old = block(new_js, "/* portfolio-updater:sections:begin */", "/* portfolio-updater:sections:end */", sbody)
+    if old is None:
+        errors.append("analytics.js has no portfolio-updater:sections markers")
+    elif old != sbody:
+        changes.append("analytics.js: section names updated")
+    if write and new_js != js_text:
+        js_path.write_text(new_js, encoding="utf-8")
+
+    # 2. Tag Manager container
+    events = scan_events(site)
+    keys = analytics_keys(js_text)
+    gtm_changes, gtm_errors = sync_gtm(site, events, keys, write)
+    changes += gtm_changes
+    errors += gtm_errors
+
+    # 3. studio pages carry their workflow name
+    for s in studios:
+        if s["path"].endswith("/"):
+            pg = site.root / s["path"] / "index.html"
+            if pg.exists() and f'content="{workflow_name(s)}"' not in pg.read_text(encoding="utf-8"):
+                changes.append(f"{s['path']}index.html: analytics workflow name out of date (run build-pages)")
+        else:
+            pg = site.root / s["path"]
+            if pg.exists() and 'name="analytics-workflow"' not in pg.read_text(encoding="utf-8"):
+                errors.append(f"{s['path']} has no analytics-workflow meta tag")
+
+    # 4. what still needs a person: GTM import, GA4 dimensions, Looker filter
+    cpath = gtm_file(site)
+    ev_in_gtm = sorted(t["name"][len("CE - "):] for t in json.loads(cpath.read_text(encoding="utf-8"))["containerVersion"]["trigger"] if t["name"].startswith("CE - ")) if cpath else []
+    st_path = status_path(site)
+    status = read_json(st_path, None)
+    if status is None:  # first run: what is in the repo now is taken as already set up
+        status = {"gtm_tags": gtm_tags(cpath), "ga4_dimensions": sorted(set(doc_registered_dims(site)) | BUILTIN_PARAMS),
+                  "looker_workflows": sorted(workflow_name(s) for s in studios if s["path"].startswith("studio/"))}
+        changes.append("docs/analytics-status.json created")
+    pending = []
+    now_tags, known = gtm_tags(cpath), status.get("gtm_tags", {})
+    diffs = [f"`{n}` (new)" if n not in known else f"`{n}` (now sends {', '.join(sorted(set(p_) - set(known[n])))})"
+             for n, p_ in now_tags.items() if n not in known or set(p_) - set(known[n])]
+    if diffs:
+        pending.append("Tag Manager: import `docs/%s` (Admin, Import container, Merge, overwrite conflicting items), check it in Preview, then Publish. Changed: %s." % (cpath.name, "; ".join(diffs)))
+    new_dim = [k for k in keys if k not in status["ga4_dimensions"] and k not in BUILTIN_PARAMS]
+    if new_dim:
+        pending.append("GA4: register custom dimensions (Admin, Custom definitions, scope Event) for: %s." % ", ".join(f"`{k}`" for k in new_dim))
+    new_wf = [workflow_name(s) for s in studios if workflow_name(s) not in status["looker_workflows"]]
+    if new_wf:
+        pending.append("Looker Studio: open the report and check the Workflow drop-down lists %s; add the studio charts from section 8 of `docs/ANALYTICS.md` to page 4." % ", ".join(f"`{w}`" for w in new_wf))
+    status_out = status
+
+    # 5. the guide
+    doc = site.root / "docs" / "ANALYTICS.md"
+    if doc.exists():
+        text = doc.read_text(encoding="utf-8")
+        body_md = render_doc_block(site, studios, sections, sorted(events), pending)
+        if DOC_BEGIN in text:
+            new_text, old = block(text, DOC_BEGIN, DOC_END, body_md)
+            old_cmp = re.sub(r"Last sync: [\d-]+", "", old or "")
+            if re.sub(r"Last sync: [\d-]+", "", body_md) != old_cmp:
+                changes.append("docs/ANALYTICS.md: studios section updated")
+            else:
+                new_text = text  # nothing but the date changed: leave the file alone
+        else:
+            new_text = text.rstrip("\n") + "\n\n" + DOC_BEGIN + body_md + DOC_END + "\n"
+            changes.append("docs/ANALYTICS.md: studios section added")
+        if write and new_text != text:
+            doc.write_text(new_text, encoding="utf-8")
+    if write and (not st_path.exists()):
+        write_json(st_path, status_out)
+    return changes, pending, errors
+
+
+def cmd_analytics(site: Site, a: argparse.Namespace) -> int:
+    if a.action == "confirm":
+        changes, pending, _ = analytics(site, write=False)
+        cpath = gtm_file(site)
+        events = sorted(t["name"][5:] for t in json.loads(cpath.read_text(encoding="utf-8"))["containerVersion"]["trigger"] if t["name"].startswith("CE - ")) if cpath else []
+        st = read_json(status_path(site), {"gtm_tags": {}, "ga4_dimensions": [], "looker_workflows": []})
+        if a.gtm or a.all:
+            st["gtm_tags"] = gtm_tags(cpath)
+        if a.ga4 or a.all:
+            st["ga4_dimensions"] = sorted(set(analytics_keys((site.root / "assets" / "analytics.js").read_text(encoding="utf-8"))) | BUILTIN_PARAMS | set(st["ga4_dimensions"]))
+        if a.looker or a.all:
+            st["looker_workflows"] = sorted(workflow_name(s) for s in site.studios())
+        write_json(status_path(site), st)
+        analytics(site, write=True)
+        print("status saved")
+        return 0
+    changes, pending, errors = analytics(site, write=(a.action == "sync"))
+    for c in changes:
+        print(("changed: " if a.action == "sync" else "out of date: ") + c)
+    for e in errors:
+        print("ERROR:", e)
+    if pending:
+        print("PENDING MANUAL STEPS (GA4, Tag Manager, Looker Studio; I cannot reach them):")
+        for p_ in pending:
+            print("  -", p_)
+    elif not errors:
+        print("analytics: nothing pending")
+    if a.action == "check":
+        return 1 if (errors or changes) else 0
+    return 1 if errors else 0
+
 # ------------------------------------------------------------------------------------------------- publish
 def git(site: Site, *args: str, check: bool = True) -> subprocess.CompletedProcess:
     return subprocess.run(["git", "-C", str(site.root), *args], capture_output=True, text=True, check=check)
 
 
 def cmd_publish(site: Site, a: argparse.Namespace) -> int:
+    for c in analytics(site, write=True)[0]:
+        print("changed:", c)
     if cmd_check(site, a) != 0:
         die("check failed; fix it before publishing", 1)
+    _, pending, _ = analytics(site, write=False)
     branches = site.profile.get("live_branches") or ["main"]
     git(site, "add", "-A")
     if not git(site, "status", "--porcelain").stdout.strip():
@@ -485,11 +793,24 @@ def cmd_publish(site: Site, a: argparse.Namespace) -> int:
         print(git(site, "status", "--short").stdout, "\n(dry run) would push to:", ", ".join(branches))
         return 0
     git(site, "commit", "-m", a.message)
+    here = git(site, "rev-parse", "--abbrev-ref", "HEAD").stdout.strip()
+    tree = git(site, "rev-parse", "HEAD^{tree}").stdout.strip()
     for b in branches:
-        r = git(site, "push", "origin", f"HEAD:{b}", check=False)
+        if b == here:
+            r = git(site, "push", "origin", f"HEAD:{b}", check=False)
+        else:  # another live branch holding the same site: add one commit on top of its remote tip with this tree
+            f = git(site, "fetch", "origin", b, check=False)
+            if f.returncode:
+                die(f"could not fetch {b}: {f.stderr.strip()}", 1)
+            new = git(site, "commit-tree", tree, "-p", "FETCH_HEAD", "-m", a.message).stdout.strip()
+            r = git(site, "push", "origin", f"{new}:refs/heads/{b}", check=False)
         if r.returncode:
-            die(f"push to {b} failed: {r.stderr.strip()}", 1)
+            die(f"push to {b} failed: {r.stderr.strip()} (if the branch moved, fetch it and try again)", 1)
         print(f"pushed to {b}")
+    if pending:
+        print("PENDING MANUAL STEPS (GA4, Tag Manager, Looker Studio; the skill cannot reach them):")
+        for p_ in pending:
+            print("  -", p_)
     if site.profile.get("site_url"):
         print("live at", site.profile["site_url"], "(GitHub Pages can take a minute or two)")
     return 0
@@ -530,6 +851,12 @@ def main() -> int:
     c.set_defaults(fn=cmd_new_studio)
 
     sub.add_parser("build-pages").set_defaults(fn=cmd_build_pages)
+
+    c = sub.add_parser("analytics", help="keep analytics.js, the Tag Manager export and the tracking guide in step with the site")
+    c.add_argument("action", choices=["sync", "check", "confirm"])
+    c.add_argument("--gtm", action="store_true"); c.add_argument("--ga4", action="store_true")
+    c.add_argument("--looker", action="store_true"); c.add_argument("--all", action="store_true")
+    c.set_defaults(fn=cmd_analytics)
     sub.add_parser("check").set_defaults(fn=cmd_check)
 
     c = sub.add_parser("publish")
