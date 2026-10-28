@@ -62,3 +62,8 @@ A page with its own design (the Kwento: Kilabot studio) keeps its list of videos
 ...
 /* portfolio-updater:videos:end */
 ```
+
+## data/team.json
+
+The teammates in "The Team I built". Keyed by skill id: `{"members": {"<skill-id>": {"name", "title", "avatar"}}}`.
+`sync-skills` adds a member for each skill that has `metadata.persona` and never replaces an existing one.

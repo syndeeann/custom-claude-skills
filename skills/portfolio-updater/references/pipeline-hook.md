@@ -18,3 +18,10 @@ approves and the status becomes `posted`.
 
 If the output ends with PENDING MANUAL STEPS (a changed Tag Manager container, a new GA4 dimension, a Looker Studio
 filter), copy them into the run log and tell the owner. They only appear when analytics changed, not on every video.
+
+## Other triggers
+
+Not only videos. Run the skill too when a Claude project is created, or when a project's instructions change the
+way its videos are made: update `data/workflow.json` for that studio to match, then `check` and `publish`. When a
+skill is added or named (`metadata.persona`), run `sync-skills`; it adds the teammate to The Team I built. All of
+these publish to both live branches.

@@ -13,9 +13,12 @@ metadata:
     - "Shows a NEW badge for 7 days after it is published"
     - "Keeps each studio page, the workflow and the skills showcase up to date"
     - "Keeps analytics, the Tag Manager export and the Looker Studio guide in step, and lists the manual steps left"
-    - "Pushes the update to the live branch and checks it"
+    - "Watches everything happening in the owner's Claude projects and updates the portfolio when it changes"
+    - "Adds or edits a teammate in The Team I built whenever a skill is added, named or changed"
+    - "Updates the studio workflow pipelines when a project's instructions or video flow change"
+    - "Pushes the update to the live branch and to gh-pages, and checks it"
   category: automation
-  version: "1.1.1"
+  version: "1.2.0"
   media: web
   projects: [kwento-kilabot, tiktok-shop-ads, portfolio]
 ---
@@ -31,6 +34,23 @@ Everything specific to one site (repos, branches, project-to-studio rules, hand-
 `profiles/syndeeann-portfolio.json`. Use `profiles/generic.json` as the starting point for another site. The
 data formats are in `references/data-formats.md`; how to call this from a pipeline is in
 `references/pipeline-hook.md`.
+
+## When Chelsea runs
+
+Chelsea keeps track of the owner's Claude projects (their instructions, docs, repos and runs) and brings the
+portfolio in line whenever one of these happens. Read the project's current instructions and docs first (the
+Projects tool when one is attached), compare them with the site's data, and change only what differs.
+
+| What happened | What to update |
+|---|---|
+| Kwento: Kilabot delivers a video | `add --run-dir` (Stories studio, NEW badge), then publish |
+| TikTok Shop ads generate a video | `add --run-dir` (Ads studio, NEW badge), then publish |
+| A new project is added | Register it in the profile's `projects` (with its studio), add the studio if it is a new kind of output (`new-studio`), add its pipeline to `data/workflow.json`, add its videos or apps, then publish |
+| A project's instructions change (for example the order of the video-creation steps, a new step, a swapped skill) | Rewrite that studio's pipeline in `data/workflow.json` to match (steps, skills, tags, warnings, loops), then update the studio tagline, the skills' `projects` and anything else that mentions the old flow; `build-pages`, `check`, publish |
+| A skill is added, renamed, given a name (persona) or its responsibilities change | `sync-skills`, which refreshes the skills list and adds or edits the teammate in The Team I built (`data/team.json`); then publish |
+
+Every one of these ends with `publish`, which pushes to `feature/portfolio-v4` and mirrors the same files to
+`gh-pages`, so the live portfolio shows the change. Say what changed and what could not be verified.
 
 ## 1. Get the site
 
@@ -69,6 +89,9 @@ Use `--republish` only when the owner wants the badge restarted.
 - A new skill or a changed skill description: `sync-skills --skills-repo PATH_TO_SKILLS_REPO` rebuilds
   `data/skills.json` from each skill's `metadata` (title, role, summary, responsibilities, projects, order).
   A skill that lacks those fields shows with a plain fallback and a warning; fill them in.
+  It also keeps `data/team.json` (The Team I built) in step: a skill with `metadata.persona` gets a teammate with
+  that name. Existing teammates keep their avatar and title; a new one gets an initial-badge avatar in the site's
+  team assets, which the owner can replace with a drawn one.
 - A new kind of output: `new-studio --id ID --name NAME --tagline TEXT --kind video|app --keywords a,b,c`
   adds it to My AI Studio and generates its page at `ID/`. Add `--theme NAME` (and `--accent`, `--fonts`) and write a matching `body[data-theme="NAME"]` block in the site's `themes.css` so the studio has its own vibe. Then add its pipeline to `data/workflow.json`.
 - Changed template or styles: `build-pages` regenerates every generated studio page. Hand-built pages

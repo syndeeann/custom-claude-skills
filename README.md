@@ -36,7 +36,7 @@ The list below is generated from each skill's `SKILL.md`. Don't edit it by hand:
 
 | Skill | Name | What it does | Media | Projects | Version |
 |---|---|---|---|---|---|
-| [`portfolio-updater`](skills/portfolio-updater/SKILL.md) | Chelsea | Updates the owner's static GitHub Pages portfolio every time a new video or app is delivered: adds it to the right studio in My AI Studio (Ads Videos, Kids, Stories, App… | web | kwento-kilabot, tiktok-shop-ads, portfolio | 1.1.1 |
+| [`portfolio-updater`](skills/portfolio-updater/SKILL.md) | Chelsea | Updates the owner's static GitHub Pages portfolio every time a new video or app is delivered: adds it to the right studio in My AI Studio (Ads Videos, Kids, Stories, App… | web | kwento-kilabot, tiktok-shop-ads, portfolio | 1.2.0 |
 <!-- skills:end -->
 
 ## Layout
