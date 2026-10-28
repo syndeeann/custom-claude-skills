@@ -1,0 +1,9 @@
+{
+  "name": "generic",
+  "description": "Default rules for any project.",
+  "extensions": [],
+  "max_mb": null,
+  "review_checklist": [
+    "TODO: what the reviewer checks for every item"
+  ]
+}
