@@ -1,0 +1,26 @@
+name: skills
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check-and-package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - name: Validate every skill
+        run: python tools/skills.py validate
+      - name: README skill list is up to date
+        run: python tools/skills.py index --check
+      - name: Package skills
+        run: python tools/skills.py package
+      - uses: actions/upload-artifact@v4
+        with:
+          name: skills
+          path: dist/*.skill

@@ -1,0 +1,22 @@
+{
+  "name": "kwento-kilabot",
+  "description": "Kwento: Kilabot Tagalog horror Reels/Shorts — vertical 720p 24 fps, off-screen narrator, final under 9.5 MB.",
+  "format": {
+    "orientation": "vertical",
+    "fps": 24,
+    "resolutions": [[720, 1280], [1080, 1920]],
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "max_mb": 10
+  },
+  "clip": {"min_s": 6, "max_s": 10},
+  "speech_expected": "script",
+  "seconds_per_word": 0.5,
+  "visual_checklist": [
+    "Each clip shows its expected visual (expected_visuals), in story order, no repeated shot",
+    "No text, subtitles, watermark or logos; no garbled faces or hands",
+    "Characters stay consistent across clips (the narrator, recurring figures)",
+    "Look: foggy night, eerie Filipino setting — no clip breaks the mood (bright daylight, cartoonish look)",
+    "No dubbing: while the off-screen narrator talks, nobody on screen opens or moves their mouth (lip_sheet, frames N.1–N.4). Any mouth movement = FAIL"
+  ]
+}

@@ -1,0 +1,12 @@
+dist/
+__pycache__/
+*.pyc
+.DS_Store
+qa-*/
+check/
+*.mp4
+*.mov
+*.webm
+*.mkv
+*.m4v
+*.wav

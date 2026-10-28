@@ -1,0 +1,25 @@
+{
+  "name": "tiktok-shop-ads",
+  "description": "TikTok Shop affiliate UGC ads — Taglish Ate Host narration, Veo hero clips with no voice-over, final ≥ 60 s of content plus a 2.5 s end card.",
+  "format": {
+    "orientation": "vertical",
+    "fps": 24,
+    "resolutions": [[720, 1280], [1080, 1920]],
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "max_mb": 10
+  },
+  "clip": {"min_s": 6, "max_s": 10},
+  "final": {"min_content_s": 60, "max_content_s": 75},
+  "speech_expected": "script",
+  "seconds_per_word": 0.42,
+  "visual_checklist": [
+    "Each clip shows its expected visual (expected_visuals), in script order, no repeated shot",
+    "THE PRODUCT MATCHES THE LISTING PHOTO in every clip it appears — shape, colour, size versus hands, logo, parts; it never morphs. A wrong-looking product is a FAIL (it misrepresents what the buyer gets)",
+    "No text, subtitles, watermark or stray logos (only what is printed on the product itself)",
+    "Hands: five fingers each, plausible grip, slow simple actions",
+    "The Ate Host looks the same in every clip (face, hair, grey t-shirt, no jewellery)",
+    "Lip check: only the on-screen host moves her lips, in sync with her words; bystanders keep lips closed; when the host is off-screen nobody on screen moves their lips",
+    "Hero clips (no voice-over) have no one talking"
+  ]
+}

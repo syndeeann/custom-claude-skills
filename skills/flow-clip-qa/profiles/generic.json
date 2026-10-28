@@ -1,0 +1,35 @@
+{
+  "name": "generic",
+  "description": "Any Flow clip, any project. Checks what every Flow clip should get right; format rules only when the project sets them.",
+  "format": {
+    "orientation": null,
+    "fps": null,
+    "resolutions": [],
+    "video_codec": null,
+    "audio_codec": null,
+    "max_mb": null,
+    "require_audio": true
+  },
+  "clip": {"min_s": null, "max_s": null},
+  "final": {"min_content_s": null, "max_content_s": null},
+  "sync_ms": 60,
+  "black_s": 0.4,
+  "freeze_s": 2.5,
+  "speech_expected": "script",
+  "speech_tail_s": 0.3,
+  "seconds_per_word": 0.45,
+  "flag_unexpected_speech": true,
+  "repeats": true,
+  "extra_stopwords": [],
+  "lip_check": true,
+  "visual_checklist": [
+    "Each clip shows the scene its prompt asked for (compare with expected_visuals when a script was given)",
+    "No text, letters, subtitles, captions, watermarks or stray logos anywhere in the frame",
+    "Faces look natural and stay the same through the clip — no melting, warping or changing features",
+    "Hands are natural: five fingers each, plausible grip, nothing fused or bending wrongly",
+    "Objects keep their shape, colour and size — nothing morphs, appears or vanishes",
+    "The same character looks the same across clips (face, hair, clothes)",
+    "No two clips are the same shot (redundant clip) and the clips are in the intended order",
+    "Lip check: only the person who is actually speaking moves their lips, in sync; nobody on screen 'dubs' a voice-over"
+  ]
+}
