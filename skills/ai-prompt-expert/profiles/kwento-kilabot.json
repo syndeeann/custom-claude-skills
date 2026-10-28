@@ -1,0 +1,21 @@
+{
+  "name": "kwento-kilabot",
+  "description": "Kwento: Kilabot Tagalog horror Reels/Shorts — off-screen narrator, nobody on screen ever shown speaking, foggy-night eerie Filipino look, vertical.",
+  "platform": "Google Flow",
+  "aspect": "9:16",
+  "allowed_seconds": [6, 8, 10],
+  "seconds_per_word": 0.5,
+  "default_mode": "voiceover",
+  "modes": ["voiceover"],
+  "faces": "away-only",
+  "base_look": "Foggy night in a Philippine town, sodium-vapour streetlight haze, handheld 35mm look, muted palette, fine film grain.",
+  "closing": "Clean frame, free of subtitles, captions, watermarks and logos.",
+  "prompt_words": {"min": 30, "warn_over": 120, "max": 200},
+  "needs_reference_images": false,
+  "visual_rules": [
+    "The narrator is off-screen in every clip. A visible person is always framed from behind, in silhouette, or by their hands; faces are never shown. This is stricter than the generic rule because any lip movement fails the QA check.",
+    "Foggy night and an eerie, specific Filipino setting in every clip; nothing bright, clean or cartoonish.",
+    "Recurring figures and places use a locked Look anchor, pasted verbatim into every prompt where they appear.",
+    "Avoid readable signs, close-ups of crowds and many hands; show one slow detail instead."
+  ]
+}

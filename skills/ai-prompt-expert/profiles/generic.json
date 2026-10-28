@@ -1,0 +1,20 @@
+{
+  "name": "generic",
+  "description": "Any project: Google Flow, vertical 9:16, off-screen narrator by default, clean photoreal look. Projects override only what differs.",
+  "platform": "Google Flow",
+  "aspect": "9:16",
+  "allowed_seconds": [4, 6, 8, 10],
+  "seconds_per_word": 0.42,
+  "default_mode": "voiceover",
+  "modes": ["voiceover", "on-camera", "hero"],
+  "faces": "closed-mouth-or-away",
+  "base_look": "",
+  "closing": "Clean frame, free of subtitles, captions, watermarks and logos.",
+  "prompt_words": {"min": 30, "warn_over": 120, "max": 200},
+  "needs_reference_images": false,
+  "visual_rules": [
+    "Real camera behaviour only: handheld, locked-off, slow push-in or pull-back, slow pan. No drone swoops or whip pans.",
+    "Light comes from a source in the scene (window, tube light, streetlight, lamp, overcast sky).",
+    "One slow, simple, physical action per clip that could be filmed in a single take."
+  ]
+}

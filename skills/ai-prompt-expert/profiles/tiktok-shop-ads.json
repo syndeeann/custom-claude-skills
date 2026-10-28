@@ -1,0 +1,21 @@
+{
+  "name": "tiktok-shop-ads",
+  "description": "TikTok Shop affiliate UGC ads — Taglish Ate Host on camera, voiceover clips, silent hero clips, product must match the listing photo.",
+  "platform": "Google Flow",
+  "aspect": "9:16",
+  "allowed_seconds": [6, 8, 10],
+  "seconds_per_word": 0.42,
+  "default_mode": "voiceover",
+  "modes": ["on-camera", "voiceover", "hero"],
+  "faces": "closed-mouth-or-away",
+  "base_look": "Natural daylight in a Filipino home, vertical phone-camera feel, true-to-life colour, slight natural grain.",
+  "closing": "Clean frame, free of subtitles, captions, watermarks and logos.",
+  "prompt_words": {"min": 30, "warn_over": 120, "max": 200},
+  "needs_reference_images": true,
+  "visual_rules": [
+    "Upload the listing photo as a reference image (Flow ingredients) and use it for every clip where the product appears. Pick a model that supports ingredients; check references/platforms.md. The product must look exactly like the photo in every clip: shape, colour, size against hands, logo, parts.",
+    "Only the Ate Host speaks, and only in on-camera clips, in sync with her words; her look is a locked Look anchor (face, hair, grey t-shirt, no jewellery). In voiceover and hero clips nobody on screen speaks.",
+    "Hands: five fingers, a plausible grip, slow simple actions; show the product doing its job in a tight, steady shot.",
+    "No readable text except what is printed on the product itself."
+  ]
+}
