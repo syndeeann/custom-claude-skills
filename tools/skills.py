@@ -119,6 +119,7 @@ def cmd_validate(_: argparse.Namespace) -> int:
 
 # ------------------------------------------------------------------------------------------------- index
 def short(desc: str, n: int = 170) -> str:
+    desc = re.sub(r"^Also called [^.]*\.\s*", "", desc.strip())
     first = re.split(r"(?<=[.!?])\s", desc.strip(), maxsplit=1)[0]
     return first if len(first) <= n else first[: n - 1].rstrip() + "…"
 
@@ -137,10 +138,10 @@ def build_index() -> str:
     order = [c for c in CATEGORY_TITLES if c in groups] + sorted(c for c in groups if c not in CATEGORY_TITLES)
     for cat in order:
         out += [f"### {CATEGORY_TITLES.get(cat, cat.title())}", "",
-                "| Skill | What it does | Media | Projects | Version |", "|---|---|---|---|---|"]
+                "| Skill | Name | What it does | Media | Projects | Version |", "|---|---|---|---|---|---|"]
         for name, fm, m in groups[cat]:
             projects = ", ".join(m.get("projects") or []) or "any"
-            out.append(f"| [`{name}`](skills/{name}/SKILL.md) | {short(fm.get('description', ''))} | "
+            out.append(f"| [`{name}`](skills/{name}/SKILL.md) | {m.get('persona', '–')} | {short(fm.get('description', ''))} | "
                        f"{m.get('media', '–')} | {projects} | {m.get('version', '–')} |")
         out.append("")
     return "\n".join(out).rstrip()

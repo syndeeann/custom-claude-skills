@@ -2,6 +2,17 @@
 
 My own skills for Claude, one folder per skill. They're standalone, so any project can use them.
 
+## Who is who
+
+Each skill has a first name, and the owner uses it in conversation. When you hear one of these names, it means that skill:
+
+- **Marites** is `storyteller` (writes the video scripts)
+- **Senyorita** is `ai-prompt-expert` (the prompt expert for Google Flow and other AI video tools)
+- **Perpekto** is `flow-clip-qa` (the video QA)
+- **Chelsea** is `portfolio-updater` (updates the portfolio when a video is delivered)
+
+The name lives in each skill's `metadata.persona`.
+
 ## Skills
 
 The list below is generated from each skill's `SKILL.md`. Don't edit it by hand: run
@@ -10,22 +21,22 @@ The list below is generated from each skill's `SKILL.md`. Don't edit it by hand:
 <!-- skills:begin -->
 ### Quality assurance (QA)
 
-| Skill | What it does | Media | Projects | Version |
-|---|---|---|---|---|
-| [`flow-clip-qa`](skills/flow-clip-qa/SKILL.md) | Quality-assurance check for video clips made with Google Flow (Veo, Omni) — raw clips, a folder of downloads, or an assembled Reel/ad with its cut list. | video | kwento-kilabot, tiktok-shop-ads | 1.0.0 |
+| Skill | Name | What it does | Media | Projects | Version |
+|---|---|---|---|---|---|
+| [`flow-clip-qa`](skills/flow-clip-qa/SKILL.md) | Perpekto | Quality-assurance check for video clips made with Google Flow (Veo, Omni) — raw clips, a folder of downloads, or an assembled Reel/ad with its cut list. | video | kwento-kilabot, tiktok-shop-ads | 1.0.1 |
 
 ### Content creation
 
-| Skill | What it does | Media | Projects | Version |
-|---|---|---|---|---|
-| [`ai-prompt-expert`](skills/ai-prompt-expert/SKILL.md) | Turns a video script or narration into clean, copy-ready generation prompts for Google Flow (Veo, Omni) and other AI video generators, built for real-life, photoreal foo… | video | kwento-kilabot, tiktok-shop-ads | 1.0.0 |
-| [`storyteller`](skills/storyteller/SKILL.md) | Writes detailed, specific, uncommon video scripts — a hook, beat-by-beat narration, and a ready-to-use visual prompt for every clip — for short-form and AI-generated vid… | text | kwento-kilabot, tiktok-shop-ads | 1.0.0 |
+| Skill | Name | What it does | Media | Projects | Version |
+|---|---|---|---|---|---|
+| [`ai-prompt-expert`](skills/ai-prompt-expert/SKILL.md) | Senyorita | Turns a video script or narration into clean, copy-ready generation prompts for Google Flow (Veo, Omni) and other AI video generators, built for real-life, photoreal foo… | video | kwento-kilabot, tiktok-shop-ads | 1.0.1 |
+| [`storyteller`](skills/storyteller/SKILL.md) | Marites | Writes detailed, specific, uncommon video scripts — a hook, beat-by-beat narration, and a ready-to-use visual prompt for every clip — for short-form and AI-generated vid… | text | kwento-kilabot, tiktok-shop-ads | 1.0.1 |
 
 ### Automation
 
-| Skill | What it does | Media | Projects | Version |
-|---|---|---|---|---|
-| [`portfolio-updater`](skills/portfolio-updater/SKILL.md) | Updates the owner's static GitHub Pages portfolio every time a new video or app is delivered: adds it to the right studio in My AI Studio (Ads Videos, Kids, Stories, App… | web | kwento-kilabot, tiktok-shop-ads, portfolio | 1.1.0 |
+| Skill | Name | What it does | Media | Projects | Version |
+|---|---|---|---|---|---|
+| [`portfolio-updater`](skills/portfolio-updater/SKILL.md) | Chelsea | Updates the owner's static GitHub Pages portfolio every time a new video or app is delivered: adds it to the right studio in My AI Studio (Ads Videos, Kids, Stories, App… | web | kwento-kilabot, tiktok-shop-ads, portfolio | 1.1.1 |
 <!-- skills:end -->
 
 ## Layout

@@ -1,8 +1,9 @@
 ---
 name: portfolio-updater
-description: "Updates the owner's static GitHub Pages portfolio every time a new video or app is delivered: adds it to the right studio in My AI Studio (Ads Videos, Kids, Stories, Applications), shows a NEW badge for its first 7 days, keeps each studio's own page, the workflow section, the Claude skills section (with a GitHub button), analytics, the Tag Manager export and the Looker Studio guide current, then pushes to the live branch. Use it whenever a video has been posted or delivered, a new app is finished, a skill was added or changed, or the user says update my portfolio, add this to my studio, show my latest video or add a new studio, in any project (Kwento: Kilabot, TikTok Shop ads, kids, apps)."
+description: "Also called Chelsea: when the owner says Chelsea, this is the skill they mean. Updates the owner's static GitHub Pages portfolio every time a new video or app is delivered: adds it to the right studio in My AI Studio (Ads Videos, Kids, Stories, Applications), shows a NEW badge for its first 7 days, keeps each studio's own page, the workflow section, the Claude skills section (with a GitHub button), analytics, the Tag Manager export and the Looker Studio guide current, then pushes to the live branch. Use it whenever a video has been posted or delivered, a new app is finished, a skill was added or changed, or the user says update my portfolio, add this to my studio, show my latest video or add a new studio, in any project (Kwento: Kilabot, TikTok Shop ads, kids, apps)."
 metadata:
   title: Portfolio Updater
+  persona: Chelsea
   role: Portfolio publisher
   order: 4
   summary: "Adds every delivered video or app to the right studio on the portfolio, with a NEW badge for its first week, and keeps the workflow and skills sections current."
@@ -14,7 +15,7 @@ metadata:
     - "Keeps analytics, the Tag Manager export and the Looker Studio guide in step, and lists the manual steps left"
     - "Pushes the update to the live branch and checks it"
   category: automation
-  version: "1.1.0"
+  version: "1.1.1"
   media: web
   projects: [kwento-kilabot, tiktok-shop-ads, portfolio]
 ---
