@@ -1,0 +1,7 @@
+{
+  "name": "kwento-kilabot",
+  "description": "Kwento: Kilabot Tagalog horror Reels: vertical, one calm off-screen narrator, slow cuts that keep the fog and silence.",
+  "freeze_s": 3.0,
+  "bed_gain_db": -14,
+  "tail_over_s": 0.8
+}

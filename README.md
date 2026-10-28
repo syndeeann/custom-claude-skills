@@ -8,6 +8,7 @@ Each skill has a first name, and the owner uses it in conversation. When you hea
 
 - **Marites** is `storyteller` (writes the video scripts)
 - **Senyorita** is `ai-prompt-expert` (the prompt expert for Google Flow and other AI video tools)
+- **Jaiman** is `video-editor` (edits and compiles the clips into one seamless video, with the voice-over in sync)
 - **Perpekto** is `flow-clip-qa` (the video QA)
 - **Chelsea** is `portfolio-updater` (updates the portfolio when a video is delivered)
 
@@ -31,6 +32,12 @@ The list below is generated from each skill's `SKILL.md`. Don't edit it by hand:
 |---|---|---|---|---|---|
 | [`ai-prompt-expert`](skills/ai-prompt-expert/SKILL.md) | Senyorita | Turns a video script or narration into clean, copy-ready generation prompts for Google Flow (Veo, Omni) and other AI video generators, built for real-life, photoreal foo… | video | kwento-kilabot, tiktok-shop-ads | 1.0.1 |
 | [`storyteller`](skills/storyteller/SKILL.md) | Marites | Writes detailed, specific, uncommon video scripts — a hook, beat-by-beat narration, and a ready-to-use visual prompt for every clip — for short-form and AI-generated vid… | text | kwento-kilabot, tiktok-shop-ads | 1.0.1 |
+
+### Video production
+
+| Skill | Name | What it does | Media | Projects | Version |
+|---|---|---|---|---|---|
+| [`video-editor`](skills/video-editor/SKILL.md) | Jaiman | Edits and compiles generated video clips (Google Flow, Veo, Omni and others) into one seamless video: puts the clips in the story order set by the script, trims and matc… | video | kwento-kilabot, tiktok-shop-ads | 1.0.0 |
 
 ### Automation
 

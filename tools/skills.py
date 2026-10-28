@@ -34,7 +34,7 @@ README = ROOT / "README.md"
 BEGIN, END = "<!-- skills:begin -->", "<!-- skills:end -->"
 ALLOWED = {"name", "description", "license", "allowed-tools", "metadata", "compatibility"}
 NAME_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
-CATEGORY_TITLES = {"qa": "Quality assurance (QA)", "content": "Content creation", "automation": "Automation",
+CATEGORY_TITLES = {"qa": "Quality assurance (QA)", "content": "Content creation", "production": "Video production", "automation": "Automation",
                    "other": "Other"}
 SKIP = {"__pycache__", ".DS_Store"}
 

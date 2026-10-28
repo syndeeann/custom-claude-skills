@@ -1,0 +1,20 @@
+{
+  "name": "generic",
+  "description": "Vertical short-form video, any project. Seamless joins, one loudness target, voice-over locked to its clip.",
+  "size": [1080, 1920],
+  "fps": 30,
+  "crf": 18,
+  "audio_fade_ms": 25,
+  "bed_gain_db": -12,
+  "lufs": -16,
+  "lufs_tolerance": 3,
+  "black_s": 0.12,
+  "freeze_s": 2.0,
+  "av_drift_ms": 80,
+  "length_tolerance_s": 0.25,
+  "speech_noise_db": -38,
+  "speech_gap_s": 0.35,
+  "joint_tolerance_s": 0.15,
+  "max_sentence_s": 6,
+  "tail_over_s": 0.6
+}

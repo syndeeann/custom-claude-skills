@@ -1,0 +1,8 @@
+{
+  "name": "tiktok-shop-ads",
+  "description": "TikTok Shop ads: vertical, brisk cuts, product clear in every shot, voice-over lands on its product moment.",
+  "freeze_s": 1.5,
+  "bed_gain_db": -10,
+  "tail_over_s": 0.4,
+  "lufs": -14
+}

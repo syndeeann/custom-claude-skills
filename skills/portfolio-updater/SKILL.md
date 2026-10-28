@@ -5,7 +5,7 @@ metadata:
   title: Portfolio Updater
   persona: Chelsea
   role: Portfolio publisher
-  order: 4
+  order: 5
   summary: "Adds every delivered video or app to the right studio on the portfolio, with a NEW badge for its first week, and keeps the workflow and skills sections current."
   responsibilities:
     - "Adds each delivered video or app to the portfolio"

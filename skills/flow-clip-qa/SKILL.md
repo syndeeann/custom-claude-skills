@@ -5,7 +5,7 @@ metadata:
   title: Flow Clip QA
   persona: Perpekto
   role: Quality gate
-  order: 3
+  order: 4
   summary: "Checks Google Flow clips and finished reels, then gives a pass or fail verdict with the cheapest fix."
   responsibilities:
     - "Runs automatic checks for format, black or frozen frames and cut-off narration"
