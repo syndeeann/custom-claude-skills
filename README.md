@@ -13,6 +13,12 @@ The list below is generated from each skill's `SKILL.md`. Don't edit it by hand:
 | Skill | What it does | Media | Projects | Version |
 |---|---|---|---|---|
 | [`flow-clip-qa`](skills/flow-clip-qa/SKILL.md) | Quality-assurance check for video clips made with Google Flow (Veo, Omni) — raw clips, a folder of downloads, or an assembled Reel/ad with its cut list. | video | kwento-kilabot, tiktok-shop-ads | 1.0.0 |
+
+### Content creation
+
+| Skill | What it does | Media | Projects | Version |
+|---|---|---|---|---|
+| [`storyteller`](skills/storyteller/SKILL.md) | Writes detailed, specific, uncommon video scripts — a hook, beat-by-beat narration, and a ready-to-use visual prompt for every clip — for short-form and AI-generated vid… | text | kwento-kilabot, tiktok-shop-ads | 1.0.0 |
 <!-- skills:end -->
 
 ## Layout
@@ -26,6 +32,8 @@ skills/
     profiles/              per-project settings (QA skills), e.g. kwento-kilabot.json
 templates/
   qa-skill/                starting point for a new QA skill
+video-projects/
+  <project>/script/        scripts written by the storyteller skill (text only), one folder per project
 tools/skills.py            create, check, index and package skills
 dist/                      built .skill files (not committed; CI builds them)
 ```

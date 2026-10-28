@@ -1,0 +1,34 @@
+{
+  "name": "kwento-kilabot",
+  "description": "Kwento: Kilabot Tagalog horror Reels/Shorts — spoken Tagalog, off-screen narrator, foggy-night eerie Filipino settings, vertical.",
+  "language": "Tagalog — spoken and conversational, the way a person tells a story at a wake, not textbook Filipino",
+  "clip_seconds": 8,
+  "seconds_per_word": 0.5,
+  "fill": [0.55, 0.9],
+  "hook_first_sentence_max_words": 12,
+  "voice": "A calm, unhurried off-screen narrator who sounds like he was there. Never shouts, never explains the fear; he reports the one detail that was wrong.",
+  "style_rules": [
+    "Fiction unless it is a documented belief or legend; label which in the script's Type line, and in Notes say which details are traditional and which are invented.",
+    "Horror comes from one wrong detail the narrator keeps noticing, not from monsters announcing themselves. Show the detail; never say 'nakakatakot'.",
+    "Anchor each story in a specific ordinary Filipino place, object or custom (a particular kind of store, ride, ritual or household rule) and let the rule drive the story.",
+    "The most-used figures (white lady, kapre, tikbalang, manananggal, tiyanak, a generic aswang) only with a twist the audience has not seen; prefer lesser-told figures, local beliefs or ordinary things gone wrong.",
+    "Spoken Tagalog: short sentences, natural contractions and particles, no stiff deep-Tagalog words. No repeated words inside a clip or across clips (the lint enforces this)."
+  ],
+  "visual_rules": [
+    "Foggy night, eerie Filipino setting in every clip; nothing bright, cartoonish or clean.",
+    "The narrator is off-screen. No visible person opens their mouth or moves their lips in any clip: frame people from behind, in silhouette, in profile with closed mouths, or show hands and objects.",
+    "Recurring figures and places get a locked descriptor in Look anchors, pasted verbatim into every visual prompt where they appear.",
+    "No text, subtitles, signs with readable words, watermark or logos; avoid close-ups of many hands or faces in a crowd.",
+    "End every visual prompt with: no subtitles, no on-screen text, no watermark, no logos, nobody speaking."
+  ],
+  "idea_wells": [
+    "Lesser-told creatures and spirits from regional Philippine folklore (verify details with a quick search before presenting anything as traditional)",
+    "House rules and superstitions around wakes, novenas, night travel and new houses (pagpag, rules about sweeping, mirrors, counting) turned into the story's governing rule",
+    "Ordinary night-time places: last trip of a jeepney, a sari-sari store after midnight, a school guard post, a barangay hall, a hospital stairwell",
+    "Objects with a history: a hand-me-down, a rosary, a radio, a key that fits more than one door"
+  ],
+  "avoid": [
+    "did you know", "alam mo ba", "hindi ka maniniwala", "nakakatakot", "in a world where", "stay tuned",
+    "it was all a dream", "game-changer"
+  ]
+}

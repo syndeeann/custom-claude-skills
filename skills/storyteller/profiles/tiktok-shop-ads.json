@@ -1,0 +1,35 @@
+{
+  "name": "tiktok-shop-ads",
+  "description": "TikTok Shop affiliate UGC ads — Taglish Ate Host narration, some silent hero clips, 60-75 s of content, honest product claims only.",
+  "language": "Taglish — natural Filipino/English code-switching, spoken by the Ate Host, not translated word for word",
+  "clip_seconds": 8,
+  "seconds_per_word": 0.42,
+  "fill": [0.55, 0.9],
+  "total_seconds": {"min": 60, "max": 75},
+  "hook_first_sentence_max_words": 12,
+  "voice": "The Ate Host: warm, practical, slightly funny, talks like a friend who already tried it. Never hypes.",
+  "style_rules": [
+    "Type is Ad. Every claim must come from the product listing or from the owner; list each one in the Fact sheet with where it came from. Never invent specs, results, prices, reviews or testimonials.",
+    "No health, income or result guarantees, no superlatives you cannot back up, no comparisons against named brands.",
+    "Open on a specific small irritation in daily Filipino life (heat, ants, tight space, rainy-season mess, a commute habit), not on the product name. The product enters as the answer at about 20-30% of the runtime.",
+    "Show before you tell: each benefit is a demonstration in a hero clip or a line the viewer can see happening, with at most 3-4 benefits in total.",
+    "Silent hero clips (hero: yes, voiceover: none) carry the product in action; vary them so no two show the same action or angle.",
+    "Finish with one clear next step in the platform's own words; ask the owner if unsure. Do not script the 2.5 s end card as a clip."
+  ],
+  "visual_rules": [
+    "The product must look exactly like the listing photo in every clip: shape, colour, size against hands, logo, parts. Put the product's description from the listing in Look anchors and paste it verbatim wherever the product appears.",
+    "The Ate Host looks the same in every clip (face, hair, grey t-shirt, no jewellery); lock her descriptor in Look anchors.",
+    "Hands: five fingers, plausible grip, slow simple actions. Only the on-screen host speaks; bystanders keep lips closed; when the host is off-screen nobody on screen talks.",
+    "No text, subtitles, watermark or stray logos (only what is printed on the product itself).",
+    "End every visual prompt with: no subtitles, no on-screen text, no watermark."
+  ],
+  "idea_wells": [
+    "Small daily irritations in Filipino homes and commutes that the product solves in one visible step",
+    "A before/after that can be shot truthfully in one continuous action",
+    "A tiny ritual or habit the viewer recognises, then a better way to do it"
+  ],
+  "avoid": [
+    "did you know", "alam mo ba", "guaranteed", "garantisado", "100%", "miracle", "gamot sa", "number one", "no.1",
+    "game-changer", "game changer", "stay tuned"
+  ]
+}
