@@ -57,6 +57,34 @@ PEOPLE = re.compile(r"\b(man|men|woman|women|guard|agent|agents|boy|girl|child|k
 
 
 # ----------------------------------------------------------------------------------------------- helpers
+
+def expand(clips: list[dict]) -> list[dict]:
+    """Turn each clip (with optional cut / cover spans) into plain pieces: {n, start, end, pic?}."""
+    out = []
+    for c in clips:
+        cuts = sorted((float(a), float(b)) for a, b in c.get("cut", []))
+        covers = sorted(c.get("cover", []), key=lambda x: x["from"])
+        edges = {round(float(c["start"]), 3), round(float(c["end"]), 3)}
+        for a, b in cuts:
+            edges |= {round(a, 3), round(b, 3)}
+        for cv in covers:
+            edges |= {round(float(cv["from"]), 3), round(float(cv["to"]), 3)}
+        pts = sorted(e for e in edges if c["start"] - 1e-6 <= e <= c["end"] + 1e-6)
+        for a, b in zip(pts, pts[1:]):
+            if b - a < 0.1:
+                continue
+            mid = (a + b) / 2
+            if any(x <= mid < y for x, y in cuts):
+                continue
+            piece = {"n": c["n"], "start": a, "end": b}
+            for cv in covers:
+                if cv["from"] <= mid < cv["to"]:
+                    pic = cv["pic"]
+                    piece["pic"] = {"n": pic["n"], "start": float(pic["start"]) + (a - cv["from"])}
+            out.append(piece)
+    return out
+
+
 def sh(cmd: list[str]) -> str:
     r = subprocess.run(cmd, capture_output=True, text=True, stdin=subprocess.DEVNULL)
     return r.stdout + r.stderr
@@ -321,13 +349,19 @@ def check_clips(files: list[Path], prof: dict, script: list[dict], out: Path) ->
                         W.append("speech starts in the first 0.1s — no lead-in, the first word may be clipped")
                     if line:
                         nw = len(re.findall(r"[\wñÑ'’-]+", line))
-                        allowed = nw * prof.get("seconds_per_word", 0.45) * 1.8 + 1.0
+                        allowed = nw * prof.get("seconds_per_word", 0.45) * prof.get("overrun_factor", 1.8) + prof.get("overrun_slack_s", 1.0)
                         if last - first > allowed:
-                            W.append(f"speech lasts {last - first:.1f}s for a {nw}-word line — Flow may have repeated "
+                            (P if prof.get("overrun_is_problem") else W).append(f"speech lasts {last - first:.1f}s for a {nw}-word line — Flow may have repeated "
                                      f"or added words; listen to it")
                     dead = longest_dead(x)
                     if dead >= 0.7:
                         W.append(f"{dead:.1f}s of total silence inside the line (check for a dropped word)")
+                    if prof.get("audio_repeats", True):
+                        from audio_repeats import find_repeats, describe
+                        reps = find_repeats(x)
+                        info["audio_repeats"] = reps
+                        for r in reps:
+                            (P if (r["strong"] or prof.get("audio_repeat_weak_is_problem")) else W).append(describe(r))
             elif silent_expected and sr >= 0.35 and prof.get("flag_unexpected_speech", True):
                 W.append(f"speech-like audio ({sr:.0%}) in a clip that should have no voice-over — listen for stray talking")
         per_clip.append({**info, "line": line, "problems": P, "warnings": W})
@@ -402,11 +436,12 @@ def check_run(run_dir: Path, prof: dict) -> dict:
     final = run_dir / f"{tid}-final.mp4"
     if not final.exists():
         sys.exit(f"{final.name} not found in {run_dir} — assemble the video first (or pass the clips folder for clips mode)")
-    cuts = edit["clips"]
+    edit_clips = edit["clips"]
+    cuts = expand(edit_clips)
     fps = prof["format"].get("fps") or 24
     problems, warnings, info = [], [], {}
 
-    ns = [c["n"] for c in cuts]
+    ns = [c["n"] for c in edit_clips]
     if ns != list(range(1, len(script) + 1)):
         problems.append(f"cut list clips {ns} != script clips 1..{len(script)} in order (missing, extra, repeated or out of order)")
 
@@ -429,7 +464,7 @@ def check_run(run_dir: Path, prof: dict) -> dict:
                 problems.append(f"clips {keys[i]} and {keys[j]} look identical (mean pixel diff "
                                 f"{float(np.abs(a - b).mean()):.1f}) — redundant clip?")
 
-    src_audio = {c["n"]: pcm(srcs[c["n"]], c["start"], c["end"] - c["start"]) for c in cuts if srcs[c["n"]].exists()}
+    src_audio = {i: pcm(srcs[c["n"]], c["start"], c["end"] - c["start"]) for i, c in enumerate(cuts) if srcs[c["n"]].exists()}
 
     def corr(a, b):
         m = min(len(a), len(b)) // 80 * 80
@@ -439,33 +474,44 @@ def check_run(run_dir: Path, prof: dict) -> dict:
         eb = np.abs(b[:m]).reshape(-1, 80).mean(1)
         return float(np.corrcoef(ea, eb)[0, 1]) if ea.std() > 0 and eb.std() > 0 else -1.0
 
-    t, seg_times, worst = 0.0, [], 0.0
-    for c in cuts:
+    t, seg_times, worst, outs = 0.0, [], 0.0, {}
+    for pi, c in enumerate(cuts):
         n = c["n"]
         d = int((c["end"] - c["start"]) * fps) / fps
         seg_times.append((n, t, d))
-        if n not in src_audio:
+        if pi not in src_audio:
             t += d
             continue
         out = pcm(final, t, d)
-        lag = lag_ms(src_audio[n], out)
+        lag = lag_ms(src_audio[pi], out)
         worst = max(worst, abs(lag))
         if abs(lag) > prof["sync_ms"]:
             problems.append(f"clip {n} at {t:.1f}s: voice-over out of sync by {lag:+.0f} ms")
-        own = corr(src_audio[n], out)
-        others = [(corr(src_audio[k], out), k) for k in src_audio if k != n]
+        own = corr(src_audio[pi], out)
+        others = [(corr(src_audio[j], out), cuts[j]["n"]) for j in src_audio if cuts[j]["n"] != n]
         best_other = max(others) if others else (-1.0, None)
         if own < 0.5 or best_other[0] > own + 0.05:
             problems.append(f"clip {n} at {t:.1f}s: audio doesn't match its own clip (own {own:.2f}, clip {best_other[1]} {best_other[0]:.2f})")
         line = spoken(script[n - 1]) if n <= len(script) else ""
-        sr = speech_ratio(out)
-        if line and sr < 0.15:
-            problems.append(f"clip {n} at {t:.1f}s: little or no narration heard (speech {sr:.0%}) — line missing or cut")
+        outs.setdefault(n, []).append(out)
         if line and len(out) > 16000 and longest_dead(out) >= 0.7:
             warnings.append(f"clip {n} at {t:.1f}s: {longest_dead(out):.1f}s of total silence inside the clip (check for a dropout)")
         t += d
     info["worst_lag_ms"] = worst
     story_end = t
+    for n, parts in outs.items():     # narration is judged per whole clip (a cut-out piece can be all pause)
+        line = spoken(script[n - 1]) if 'spoken' in globals() else ((script[n - 1].get("voiceover") or "") + (script[n - 1].get("dialogue") or ""))
+        if n <= len(script) and line.strip() and speech_ratio(np.concatenate(parts)) < 0.15:
+            problems.append(f"clip {n}: little or no narration heard — line missing or cut")
+
+    # spoken repeats: the same word / phrase said twice in the generated audio (what the script check cannot hear)
+    rep_hits = []
+    if prof.get("audio_repeats", True):
+        from audio_repeats import find_repeats, describe
+        rep_hits = find_repeats(pcm(final, 0, story_end))
+        info["audio_repeats"] = rep_hits
+        for r in rep_hits:
+            (problems if (r["strong"] or prof.get("audio_repeat_weak_is_problem", False)) else warnings).append(describe(r))
 
     blk = sh(["ffmpeg", "-nostdin", "-v", "info", "-t", f"{story_end:.2f}", "-i", str(final), "-vf",
               f"blackdetect=d={prof['black_s']}:pic_th=0.98", "-an", "-f", "null", "-"])

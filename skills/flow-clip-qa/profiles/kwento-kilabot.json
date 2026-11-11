@@ -4,12 +4,24 @@
   "format": {
     "orientation": "vertical",
     "fps": 24,
-    "resolutions": [[720, 1280], [1080, 1920]],
+    "resolutions": [
+      [
+        720,
+        1280
+      ],
+      [
+        1080,
+        1920
+      ]
+    ],
     "video_codec": "h264",
     "audio_codec": "aac",
     "max_mb": 10
   },
-  "clip": {"min_s": 6, "max_s": 10},
+  "clip": {
+    "min_s": 6,
+    "max_s": 10
+  },
   "speech_expected": "script",
   "seconds_per_word": 0.5,
   "visual_checklist": [
@@ -18,5 +30,11 @@
     "Characters stay consistent across clips (the narrator, recurring figures)",
     "Look: foggy night, eerie Filipino setting — no clip breaks the mood (bright daylight, cartoonish look)",
     "No dubbing: while the off-screen narrator talks, nobody on screen opens or moves their mouth (lip_sheet, frames N.1–N.4). Any mouth movement = FAIL"
-  ]
+  ],
+  "audio_repeats": true,
+  "audio_repeat_weak_is_problem": true,
+  "overrun_is_problem": true,
+  "overrun_factor": 1.35,
+  "overrun_slack_s": 0.6,
+  "fix_policy": "edit_only"
 }

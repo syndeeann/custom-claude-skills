@@ -24,7 +24,7 @@ The list below is generated from each skill's `SKILL.md`. Don't edit it by hand:
 
 | Skill | Name | What it does | Media | Projects | Version |
 |---|---|---|---|---|---|
-| [`flow-clip-qa`](skills/flow-clip-qa/SKILL.md) | Perpekto | Quality-assurance check for video clips made with Google Flow (Veo, Omni) — raw clips, a folder of downloads, or an assembled Reel/ad with its cut list. | video | kwento-kilabot, tiktok-shop-ads | 1.0.1 |
+| [`flow-clip-qa`](skills/flow-clip-qa/SKILL.md) | Perpekto | Quality-assurance check for video clips made with Google Flow (Veo, Omni) — raw clips, a folder of downloads, or an assembled Reel/ad with its cut list. | video | kwento-kilabot, tiktok-shop-ads | 1.1.0 |
 
 ### Content creation
 

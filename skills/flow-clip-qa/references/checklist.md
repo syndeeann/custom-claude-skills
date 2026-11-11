@@ -30,6 +30,7 @@ part A by itself; part B is your own look at the sheets; part C turns failures i
 | Video and audio lengths differ by > 0.4 s | — | ✓ |
 | Content shorter than profile `final.min_content_s` | — | ✓ |
 | Repeated words in the script (see below) | ✓ | ✓ |
+| A word or phrase **said twice in the audio** (`audio_repeats.py`) — strong match fails; weak match fails if the profile says `audio_repeat_weak_is_problem` | ✓ | ✓ (whole final) |
 
 Repeated words (problems): the same word twice in a row ("ring ring", "papalapit nang papalapit"); a
 content word twice in one clip's line ("Walang gumagalaw. Walang tumitingin."); the same two-word phrase
@@ -37,7 +38,7 @@ in two different clips. Warning: a content word in 3+ clips. Small Tagalog/Engli
 (ang, ng, sa, na, ko, the, a …) are ignored; add more with the profile's `extra_stopwords`.
 
 **Warnings — a judgment call (section C):** frozen picture, black frames at a clip edge, audio clipping,
-total silence inside a line, speech much longer than the line, speech heard in a clip that should be
+total silence inside a line, speech much longer than the line (a failure when the profile sets `overrun_is_problem`, with `overrun_factor` / `overrun_slack_s`), speech heard in a clip that should be
 silent, no lead-in before the first word, clip length outside the profile range, fps mismatch, file over
 the size cap, script/clip count mismatch.
 
@@ -105,6 +106,13 @@ Regenerating in Flow costs credits, so try free fixes first:
    only that clip, with the prompt changed to prevent the failure (e.g. "Absolutely no text …",
    "Anyone on screen keeps their lips closed", a shorter line for a cut-off line, a simpler hand action).
    The same weakness is usually in other prompts too — fix the rule everywhere before generating more.
+
+**Edit-only profiles** (`"fix_policy": "edit_only"`, e.g. kwento-kilabot — the owner does not want clips or videos
+regenerated): skip step 5 and the "regenerate" cells of section C. Fix by editing, and name the edit in the report:
+
+- **Repeated word/phrase in the audio** → cut the span `repeat_s`–`repeat_end_s` (from `qa.json → audio_repeats`) out of the clip, picture and sound together; if it sits at the clip's end, trim the end instead.
+- **Bad picture for part of a clip** (text, garbled face/hands, wrong scene, moving mouth) → cover that span with clean picture from another clip while the narration keeps playing; cut it if it carries no words.
+- **Dropped or cut-off line, whole clip unusable, no clean footage anywhere** → cannot be fixed by editing: report it as *unfixable without regeneration* and let the project decide (the owner's rule for Kwento: Kilabot is to log it failed and not post).
 
 Re-run `flow_qa.py` after every fix. Stop after 2 fix rounds and report what still fails.
 

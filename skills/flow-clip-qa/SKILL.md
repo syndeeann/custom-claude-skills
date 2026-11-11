@@ -1,6 +1,6 @@
 ---
 name: flow-clip-qa
-description: "Also called Perpekto: when the owner says Perpekto, this is the skill they mean. Quality-assurance check for video clips made with Google Flow (Veo, Omni) — raw clips, a folder of downloads, or an assembled Reel/ad with its cut list. Runs automatic checks (format, black/frozen frames, missing or cut-off narration, sync, duplicate clips, repeated words in the script) plus a visual review of contact sheets (wrong scene, text/watermarks, garbled faces or hands, morphing products, lip-sync \"dubbing\"), then gives a pass/fail verdict with the cheapest fix for each failing clip. Use it whenever the user wants Flow or other AI-generated video clips checked, reviewed, QC'd or approved before editing or posting — in any project (Kwento: Kilabot, TikTok Shop ads, or a new one), even if they only say \"check these clips\" or \"is this video ready to post?\"."
+description: "Also called Perpekto: when the owner says Perpekto, this is the skill they mean. Quality-assurance check for video clips made with Google Flow (Veo, Omni) — raw clips, a folder of downloads, or an assembled Reel/ad with its cut list. Runs automatic checks (format, black/frozen frames, missing or cut-off narration, sync, duplicate clips, repeated words in the script AND spoken twice in the generated audio) plus a visual review of contact sheets (wrong scene, text/watermarks, garbled faces or hands, morphing products, lip-sync \"dubbing\"), then gives a pass/fail verdict with the cheapest fix for each failing clip. Use it whenever the user wants Flow or other AI-generated video clips checked, reviewed, QC'd or approved before editing or posting — in any project (Kwento: Kilabot, TikTok Shop ads, or a new one), even if they only say \"check these clips\" or \"is this video ready to post?\"."
 metadata:
   title: Flow Clip QA
   persona: Perpekto
@@ -10,10 +10,10 @@ metadata:
   responsibilities:
     - "Runs automatic checks for format, black or frozen frames and cut-off narration"
     - "Reviews contact sheets for wrong scenes, text, watermarks and garbled faces"
-    - "Spots lip-sync dubbing and repeated words"
+    - "Spots lip-sync dubbing, and repeated words in the script and in the audio itself"
     - "Reports a verdict with evidence, and never posts or regenerates"
   category: qa
-  version: "1.0.1"
+  version: "1.1.0"
   media: video
   projects: [kwento-kilabot, tiktok-shop-ads]
 ---
@@ -79,6 +79,14 @@ python <skill>/scripts/flow_qa.py <run_dir> --profile <name>        # assembled 
 To check a script before spending Flow credits, run only the repeated-words check:
 `python <skill>/scripts/repeats.py <script file>`.
 
+**Spoken repeats.** `repeats.py` only reads the written line, but Flow can say a word twice or restart a
+phrase even from a clean line. `scripts/audio_repeats.py` finds that by sound (no speech recognition
+needed): it compares every voiced stretch of the audio with the speech that follows and reports
+`speech at A s said again at B–C s`. `flow_qa.py` runs it on every narrated clip, and on the whole final in run
+mode. A strong match always fails; a weak match is a warning, or a failure when the profile sets
+`audio_repeat_weak_is_problem`. It is a similarity measure, calibrated on synthetic audio: say so, and tell the
+user which clip and time to listen to if something still sounds doubled.
+
 ## 4. Visual review
 
 Read `check/qc_sheet.png`, then `check/lip_sheet.png` if it exists, and go through the profile's
@@ -92,7 +100,7 @@ is clean. Then:
 
 1. Fill in the visual-review result in `qa_report.md` (per clip notes), so the file is a complete record.
 2. Tell the user, briefly: the verdict; each failing clip — what's wrong and the cheapest fix
-   (re-cut → re-download → trim → rewrite the line → regenerate, section D); warnings and how you judged
+   (section D — for a profile with `"fix_policy": "edit_only"` only the editing fixes; never "regenerate"); warnings and how you judged
    them; anything that couldn't be checked (exact spoken words, motion between sampled frames).
    Send the contact sheet when it helps them see the problem.
 3. If the user asks you to fix things, do the cheapest fix, then run the whole check again. Stop after
