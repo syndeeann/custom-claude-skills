@@ -30,8 +30,8 @@ The list below is generated from each skill's `SKILL.md`. Don't edit it by hand:
 
 | Skill | Name | What it does | Media | Projects | Version |
 |---|---|---|---|---|---|
-| [`ai-prompt-expert`](skills/ai-prompt-expert/SKILL.md) | Senyorita | Turns a video script or narration into clean, copy-ready generation prompts for Google Flow (Veo, Omni) and other AI video generators, built for real-life, photoreal foo… | video | kwento-kilabot, tiktok-shop-ads | 1.0.1 |
-| [`storyteller`](skills/storyteller/SKILL.md) | Marites | Writes detailed, specific, uncommon video scripts — a hook, beat-by-beat narration, and a ready-to-use visual prompt for every clip — for short-form and AI-generated vid… | text | kwento-kilabot, tiktok-shop-ads | 1.0.1 |
+| [`ai-prompt-expert`](skills/ai-prompt-expert/SKILL.md) | Senyorita | Turns a video script or narration into clean, copy-ready generation prompts for Google Flow (Veo, Omni) and other AI video generators, built for real-life, photoreal foo… | video | kwento-kilabot, tiktok-shop-ads | 1.1.0 |
+| [`storyteller`](skills/storyteller/SKILL.md) | Marites | Writes detailed, specific, uncommon video scripts — a hook, beat-by-beat narration, and a ready-to-use visual prompt for every clip — for short-form and AI-generated vid… | text | kwento-kilabot, tiktok-shop-ads | 1.1.0 |
 
 ### Video production
 

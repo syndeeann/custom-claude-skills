@@ -13,7 +13,7 @@ metadata:
     - "Keeps the on-screen character from dubbing the narrator"
     - "Keeps looks consistent with reusable character and place descriptions"
   category: content
-  version: "1.0.1"
+  version: "1.1.0"
   media: video
   projects: [kwento-kilabot, tiktok-shop-ads]
 ---
@@ -92,6 +92,9 @@ Rules that the lint enforces:
   faces. Any visible person is framed from behind, in silhouette or by their hands, or has lips pressed
   together and eyes on an object. Name two or three specific ambient sounds so the audio track is filled.
 - **On-camera clips**: the exact narration goes in quotation marks with a named speaker, and nobody else speaks.
+  Exception: a profile with `"dialogue": true` (animated shows with two or more talking characters) lets each
+  speaker's line be quoted separately, with a named speaker each; the quoted lines in order must equal the
+  Narration word for word, and each character's voice is described once in the prompt.
 - **Real-life look**: name a lens or a real camera behaviour, a real light source, and one or two textures. Skip
   empty quality words (8K, masterpiece, ultra-realistic).
 - **No morphing or sequences**: no "turns into", no "then". Slow, simple, physical actions only.

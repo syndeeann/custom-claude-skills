@@ -314,10 +314,15 @@ def lint(md: str, prof: dict, script_md: str | None) -> tuple[list[dict], list[s
                 warnings.append(f"clip {n}: music in the prompt — add music when editing so the mix stays yours")
         else:  # on-camera
             quotes = QUOTED.findall(p)
-            if not any(norm(q) == norm(nar) for q in quotes):
-                problems.append(f"clip {n}: the on-camera prompt must quote the exact narration once")
-            if len(quotes) > 1:
-                warnings.append(f"clip {n}: more than one quoted line — only one person should speak")
+            if prof.get("dialogue"):
+                # dialogue profiles: several speakers; the quoted lines, in order, must equal the Narration
+                if norm(" ".join(quotes)) != norm(nar):
+                    problems.append(f"clip {n}: the quoted lines, in order, must equal the Narration word for word")
+            else:
+                if not any(norm(q) == norm(nar) for q in quotes):
+                    problems.append(f"clip {n}: the on-camera prompt must quote the exact narration once")
+                if len(quotes) > 1:
+                    warnings.append(f"clip {n}: more than one quoted line — only one person should speak")
             if not person:
                 problems.append(f"clip {n}: an on-camera clip needs a visible, named speaker")
             elif not SPEAKER.search(re.sub(QUOTED, " ", p)):
@@ -358,7 +363,7 @@ def lint(md: str, prof: dict, script_md: str | None) -> tuple[list[dict], list[s
                 problems.append(f'clip {n}: narration repeats "{a} {a}"')
         cw = content(nar)
         for w in set(cw):
-            if cw.count(w) > 1:
+            if cw.count(w) > 1 and w not in {t for x in prof.get("allow_repeats", []) for t in content(x)}:
                 problems.append(f'clip {n}: narration uses "{w}" twice in one line')
         for a, b in zip(cw, cw[1:]):
             narr_bigrams[f"{a} {b}"].add(n)

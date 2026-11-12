@@ -164,7 +164,8 @@ def lint(md: str, prof: dict) -> tuple[list[dict], list[str], list[str], list[st
             if phrase.lower() in low:
                 problems.append(f'clip {c["n"]}: "{phrase}" is on the avoid list — rewrite it')
 
-    # repeated words
+    # repeated words (a profile may list words that spoken dialogue legitimately repeats, e.g. "it's")
+    allowed = {x.lower().replace("’", "'") for x in prof.get("allow_repeats", [])}
     bigram_at: dict[str, set[int]] = defaultdict(set)
     word_at: dict[str, set[int]] = defaultdict(set)
     for c in clips:
@@ -175,7 +176,7 @@ def lint(md: str, prof: dict) -> tuple[list[dict], list[str], list[str], list[st
         seen: set[str] = set()
         cw = content(ws)
         for w in cw:
-            if w in seen:
+            if w in seen and w not in allowed:
                 problems.append(f'clip {n}: "{w}" used twice in one line')
             seen.add(w)
             word_at[w].add(n)

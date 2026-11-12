@@ -1,21 +1,37 @@
 {
   "name": "mia-rosie-midnight-mysteries",
-  "description": "Mia & Rosie: Midnight Mysteries — Google Flow, 9:16, off-screen warm narrator, expressive 3D animated characters whose mouths never move, gentle moonlit mystery look.",
+  "description": "Mia & Rosie: Midnight Mysteries — Google Flow, 9:16, expressive 3D animated characters who talk on camera (Mia and Rosie), warm moonlit magical look.",
   "platform": "Google Flow",
   "aspect": "9:16",
-  "allowed_seconds": [6, 8, 10],
+  "allowed_seconds": [
+    6,
+    8,
+    10
+  ],
   "seconds_per_word": 0.42,
-  "default_mode": "voiceover",
-  "modes": ["voiceover"],
-  "faces": "closed-mouth-or-away",
-  "base_look": "Expressive Pixar-like 3D animation, cinematic lighting, midnight-blue and lavender palette with crimson accents, gentle child-friendly mystery mood, vertical 9:16.",
-  "closing": "Clean frame, free of subtitles, captions, watermarks and logos, with every mouth closed.",
-  "prompt_words": {"min": 30, "warn_over": 190, "max": 260},
+  "default_mode": "on-camera",
+  "modes": [
+    "on-camera",
+    "hero"
+  ],
+  "faces": "speaking-on-camera",
+  "base_look": "Expressive Pixar-like 3D animation, cinematic lighting, midnight-blue and lavender palette with crimson and soft golden accents, gentle child-friendly magical mood, vertical 9:16.",
+  "closing": "Clean frame, free of subtitles, captions, watermarks and logos.",
+  "prompt_words": {
+    "min": 30,
+    "warn_over": 190,
+    "max": 300
+  },
   "needs_reference_images": true,
   "visual_rules": [
-    "Characters are animated, never photoreal. The narrator is off-screen: Mia's lips stay pressed together and Rosie's stitched mouth never moves in any clip.",
-    "Mia and Rosie are generated from the character reference images (ingredients) and the locked Look anchors, pasted verbatim, so faces, outfits and the bedroom never drift.",
-    "Moonlit midnight-blue and lavender light with crimson accents; gentle mystery, never gore or realistic horror.",
+    "Characters are animated, never photoreal. Mia and Rosie both talk on camera: each quoted line is spoken by the named character, in sync with the mouth, and nobody else speaks.",
+    "Mia is a bright, curious child's voice; Rosie, a magical doll, has a tiny, soft, friendly voice. Describe each voice once per prompt so it stays the same across clips.",
+    "Mia, Rosie, the bedroom, the toy chest and the golden star are generated from the character reference images (ingredients) and the locked Look anchors, pasted verbatim, so faces, outfits and the room never drift.",
+    "Moonlit midnight-blue and lavender light with soft golden magic glows; warm and friendly, nothing scary, never realistic.",
     "Avoid readable text, many hands and crowds; one slow, simple action per clip."
+  ],
+  "dialogue": true,
+  "allow_repeats": [
+    "it's"
   ]
 }

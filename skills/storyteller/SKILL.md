@@ -13,7 +13,7 @@ metadata:
     - "Checks every line for clichés and repeated words"
     - "Saves the script to the project folder on GitHub"
   category: content
-  version: "1.0.1"
+  version: "1.1.0"
   media: text
   projects: [kwento-kilabot, tiktok-shop-ads]
 ---
