@@ -1,0 +1,46 @@
+{
+  "clips": [
+    {
+      "n": 1,
+      "file": "001-the-mysterious-doll-at-midnight-clip01.mp4",
+      "start": 0.0,
+      "end": 10.0,
+      "voiceover": "Mia... Hmm? Did someone call me?"
+    },
+    {
+      "n": 2,
+      "file": "001-the-mysterious-doll-at-midnight-clip02.mp4",
+      "start": 0.0,
+      "end": 10.0,
+      "voiceover": "Rosie? Was that you? Maybe!"
+    },
+    {
+      "n": 3,
+      "file": "001-the-mysterious-doll-at-midnight-clip03.mp4",
+      "start": 0.0,
+      "end": 10.0,
+      "voiceover": "Rosie, look! What's inside? Let's find out!"
+    },
+    {
+      "n": 4,
+      "file": "001-the-mysterious-doll-at-midnight-clip04.mp4",
+      "start": 0.0,
+      "end": 10.0,
+      "voiceover": "Wow! It's so beautiful! It's been waiting for us."
+    },
+    {
+      "n": 5,
+      "file": "001-the-mysterious-doll-at-midnight-clip05.mp4",
+      "start": 0.0,
+      "end": 10.0,
+      "voiceover": "That little star belongs to us. Really? Why? Because every great adventure starts with a friend."
+    },
+    {
+      "n": 6,
+      "file": "001-the-mysterious-doll-at-midnight-clip06.mp4",
+      "start": 0.0,
+      "end": 10.0,
+      "voiceover": "Tomorrow, we have another adventure. I can't wait..."
+    }
+  ]
+}
