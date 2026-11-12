@@ -28,7 +28,9 @@
     "Mia is a bright, curious child's voice; Rosie, a magical doll, has a tiny, soft, friendly voice. Describe each voice once per prompt so it stays the same across clips.",
     "Mia, Rosie, the bedroom, the toy chest and the golden star are generated from the character reference images (ingredients) and the locked Look anchors, pasted verbatim, so faces, outfits and the room never drift.",
     "Moonlit midnight-blue and lavender light with soft golden magic glows; warm and friendly, nothing scary, never realistic.",
-    "Avoid readable text, many hands and crowds; one slow, simple action per clip."
+    "Avoid readable text, many hands and crowds; one slow, simple action per clip.",
+    "Continuity: paste the same room anchor in every clip, including the toy shelf, toy chest and window, so props never pop in or out.",
+    "Keep one look per recurring object (a sparkle trail is tiny golden sparkles; the golden star is a five-pointed star) and never repeat a state change across clips."
   ],
   "dialogue": true,
   "allow_repeats": [

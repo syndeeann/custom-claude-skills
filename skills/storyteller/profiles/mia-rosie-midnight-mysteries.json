@@ -14,7 +14,9 @@
     "Fiction for children aged 6 to 10 and family viewing: friendship, curiosity, kindness and gentle magic; nothing scary.",
     "Each episode is six 10-second scenes of dialogue between Mia and Rosie, with one visible change per scene (a glow, a discovery, a reveal) and a last image that closes the episode.",
     "The dialogue comes from the owner's episode script and is used word for word; scenes keep their order, their location and their dialogue.",
-    "Every line is short enough to be spoken in the scene's seconds (about 0.42 s per word) with room for pauses and sound."
+    "Every line is short enough to be spoken in the scene's seconds (about 0.42 s per word) with room for pauses and sound.",
+    "Continuity (from Episode 1 revisions): show every landmark the episode uses (toy shelf, toy chest, window, bed) in scene 1, so no prop appears for the first time mid-episode.",
+    "A prop or effect changes state once only (a chest opens once, a star appears once); each recurring object keeps one look across all six scenes, and one scene's last state is the next scene's first state."
   ],
   "visual_rules": [
     "Expressive cinematic 3D animation, midnight blue and lavender with crimson and soft golden accents; warm moonlit bedroom magic.",
