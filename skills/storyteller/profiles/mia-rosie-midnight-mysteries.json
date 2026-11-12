@@ -1,0 +1,34 @@
+{
+  "name": "mia-rosie-midnight-mysteries",
+  "description": "Mia & Rosie: Midnight Mysteries — English, family-friendly animated supernatural mystery Shorts for ages 6-10: 3D animated, warm female narrator, gentle scares, clever endings.",
+  "language": "English",
+  "clip_seconds": 10,
+  "seconds_per_word": 0.42,
+  "fill": [0.55, 0.9],
+  "hook_first_sentence_max_words": 14,
+  "voice": "A warm, expressive female storyteller who sounds like she is sharing a secret at bedtime: suspenseful and friendly, never excessively frightening.",
+  "style_rules": [
+    "Fiction for children aged 6 to 10 and family viewing. Mystery and curiosity first, gentle scares only: no gore, no violence, no cruelty, nothing a child could not watch with a grown-up.",
+    "Each episode has a strange event that opens a question, a mystery Mia tries to solve, Rosie behaving a little suspiciously, an age-appropriate reveal, and a memorable last image or line.",
+    "Rosie is mysterious, lovable and unpredictable, never purely evil. Mia is curious, brave and sometimes easily frightened.",
+    "Write for the ear: short sentences, concrete nouns, strong verbs. No repeated words inside a clip or across clips (the lint enforces this); use 'she', 'the doll' or 'the girl' instead of repeating a name.",
+    "Never write the narration as dialogue spoken by an on-screen mouth. Any whisper is narrated as heard from off-screen."
+  ],
+  "visual_rules": [
+    "Expressive cinematic 3D animation, midnight blue, lavender and crimson palette, gentle moonlit mystery mood; nothing gory, grimy or realistic-horror.",
+    "Recurring characters and the bedroom get locked descriptors in Look anchors, pasted verbatim into every visual prompt where they appear, so faces, clothes and set never drift.",
+    "The narrator is off-screen. No character opens its mouth: Mia's lips stay closed and Rosie's stitched mouth never moves.",
+    "No text, subtitles, readable words, watermark or logos.",
+    "End every visual prompt with: no subtitles, no on-screen text, no watermark, no logos, nobody speaking."
+  ],
+  "idea_wells": [
+    "Haunted toys, music boxes and dolls with a clue instead of a jump scare",
+    "Bedroom mysteries: footsteps, shadows, mirrors, closets",
+    "Gentle school and friendship mysteries",
+    "Original folklore-style enchanted forests and magical objects"
+  ],
+  "avoid": [
+    "did you know", "in a world where", "stay tuned", "it was all a dream", "game-changer", "let's dive in",
+    "welcome back", "what if i told you", "you won't believe", "terrifying", "gruesome"
+  ]
+}

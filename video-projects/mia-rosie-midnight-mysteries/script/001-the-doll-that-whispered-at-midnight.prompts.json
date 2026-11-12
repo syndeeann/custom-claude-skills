@@ -1,0 +1,52 @@
+{
+  "title": "The Doll That Whispered at Midnight",
+  "project": "mia-rosie-midnight-mysteries",
+  "language": "English",
+  "clips": [
+    {
+      "n": 1,
+      "seconds": 10.0,
+      "label": "HOOK",
+      "beat": "Opens the question: a name is called and the doll's mouth is shut.",
+      "voiceover": "Midnight. Mia heard a whisper say her name. It came from her doll, but the doll's stitched mouth never moved.",
+      "visual": "Slow push-in, medium shot. Mia, a 7-year-old girl with long wavy dark-brown hair, big warm-brown eyes and rosy cheeks, in light pink floral pajamas and pink bunny slippers, lies under the quilt in Mia's bedroom, a cozy room with a lavender canopy bed and purple star-pattern quilt, an arched moonlit window with white curtains, a dark wooden bookshelf holding a tan teddy bear and a golden carousel music box, and a tall white closet with a round brass knob, her eyes wide and lips pressed together as she glances toward the shelf where Rosie, a vintage rag doll with long wavy dark-brown hair under a large crimson bow, black X-stitched button eyes, rosy cheeks, a small stitched mouth, a crimson dress with a white round collar, white-and-red striped stockings and black Mary Jane shoes, sits slightly out of focus. Cool blue moonlight and a faint amber lamp glow. Expressive cinematic 3D animation, midnight-blue and lavender palette with crimson accents, gentle child-friendly mystery mood, vertical 9:16. No subtitles, no on-screen text, no watermark, no logos, nobody speaking.",
+      "hero": false
+    },
+    {
+      "n": 2,
+      "seconds": 10.0,
+      "label": "SETUP",
+      "beat": "Rosie has moved on her own; the mystery gets its first physical clue.",
+      "voiceover": "She tiptoed over. Rosie now faced the wall, and nobody in the house had turned her.",
+      "visual": "Slow pan following the action. Mia, a 7-year-old girl with long wavy dark-brown hair, big warm-brown eyes and rosy cheeks, in light pink floral pajamas and pink bunny slippers, tiptoes across the floorboards of Mia's bedroom, a cozy room with a lavender canopy bed and purple star-pattern quilt, an arched moonlit window with white curtains, a dark wooden bookshelf holding a tan teddy bear and a golden carousel music box, and a tall white closet with a round brass knob, lips pressed together, to Rosie, a vintage rag doll with long wavy dark-brown hair under a large crimson bow, black X-stitched button eyes, rosy cheeks, a small stitched mouth, a crimson dress with a white round collar, white-and-red striped stockings and black Mary Jane shoes, who sits on the shelf with her back to the room, bow in view. Mia lifts her into a careful hug. Silver moonlight from the window.",
+      "hero": false
+    },
+    {
+      "n": 3,
+      "seconds": 10.0,
+      "label": "ESCALATION",
+      "beat": "Proof the voice is not Rosie's: a perfectly still mouth.",
+      "voiceover": "Up close, it pleaded: keep your eyes open. Black buttons gleamed, yet the sewn smile stayed perfectly shut.",
+      "visual": "Extreme close-up with a slow push-in. Rosie, a vintage rag doll with long wavy dark-brown hair under a large crimson bow, black X-stitched button eyes, rosy cheeks, a small stitched mouth, a crimson dress with a white round collar, white-and-red striped stockings and black Mary Jane shoes, fills the frame, her stitched mouth held perfectly still while moonlight glints on both button eyes. At the frame edge, one wide brown eye of Mia, a 7-year-old girl with long wavy dark-brown hair, big warm-brown eyes and rosy cheeks, in light pink floral pajamas and pink bunny slippers, watches with lips pressed together.",
+      "hero": false
+    },
+    {
+      "n": 4,
+      "seconds": 10.0,
+      "label": "TURN",
+      "beat": "The turn: the whisper belongs to something in the hallway, not to the doll.",
+      "voiceover": "Then a shadow slid across the doorway, tall and silent, one long hand lifting. A blink later, nothing.",
+      "visual": "Low-angle wide shot, locked-off. Mia, a 7-year-old girl with long wavy dark-brown hair, big warm-brown eyes and rosy cheeks, in light pink floral pajamas and pink bunny slippers, stands from behind holding Rosie, a vintage rag doll with long wavy dark-brown hair under a large crimson bow, black X-stitched button eyes, rosy cheeks, a small stitched mouth, a crimson dress with a white round collar, white-and-red striped stockings and black Mary Jane shoes, facing the open door of Mia's bedroom, a cozy room with a lavender canopy bed and purple star-pattern quilt, an arched moonlit window with white curtains, a dark wooden bookshelf holding a tan teddy bear and a golden carousel music box, and a tall white closet with a round brass knob. In the amber-lit hallway beyond, a tall soft-edged shadow shaped like a long-armed figure slowly raises one hand, then fades from the wall.",
+      "hero": false
+    },
+    {
+      "n": 5,
+      "seconds": 10.0,
+      "label": "PAYOFF",
+      "beat": "Rosie is the guardian; the hallway voice stays unsolved for the next episode.",
+      "voiceover": "Morning found them asleep, the doll smiling. But the voice was never hers. Out in the hall, someone still murmured.",
+      "visual": "Slow pull-back reveal. Warm morning sunlight fills Mia's bedroom, a cozy room with a lavender canopy bed and purple star-pattern quilt, an arched moonlit window with white curtains, a dark wooden bookshelf holding a tan teddy bear and a golden carousel music box, and a tall white closet with a round brass knob. Mia, a 7-year-old girl with long wavy dark-brown hair, big warm-brown eyes and rosy cheeks, in light pink floral pajamas and pink bunny slippers, sleeps peacefully hugging Rosie, a vintage rag doll with long wavy dark-brown hair under a large crimson bow, black X-stitched button eyes, rosy cheeks, a small stitched mouth, a crimson dress with a white round collar, white-and-red striped stockings and black Mary Jane shoes, whose button eyes rest on the empty doorway as the camera drifts toward it.",
+      "hero": false
+    }
+  ]
+}
