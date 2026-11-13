@@ -34,6 +34,7 @@
   ],
   "dialogue": true,
   "allow_repeats": [
-    "it's"
+    "it's",
+    "star"
   ]
 }

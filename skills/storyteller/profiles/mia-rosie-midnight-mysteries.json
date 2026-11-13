@@ -49,6 +49,7 @@
     "max": 65
   },
   "allow_repeats": [
-    "it's"
+    "it's",
+    "star"
   ]
 }
