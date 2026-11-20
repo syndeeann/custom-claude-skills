@@ -1,0 +1,10 @@
+{
+  "name": "ugc-ad",
+  "description": "Edited UGC ads with an on-camera creator: voice finishes before every transition, one price per clip, captions legible, clean end card.",
+  "freeze_s": 1.5,
+  "bed_gain_db": -10,
+  "tail_over_s": 0.4,
+  "lufs": -16,
+  "voice_tail_s": 0.45,
+  "speech_speed": 1.08
+}

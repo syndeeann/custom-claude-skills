@@ -13,7 +13,7 @@ metadata:
     - "Spots lip-sync dubbing, and repeated words in the script and in the audio itself"
     - "Reports a verdict with evidence, and never posts or regenerates"
   category: qa
-  version: "1.1.0"
+  version: "1.2.0"
   media: video
   projects: [kwento-kilabot, tiktok-shop-ads]
 ---
@@ -49,6 +49,7 @@ Profiles (in `profiles/`) hold each project's format rules and visual checklist:
 |---|---|
 | `generic` | any project without its own profile (the default) |
 | `kwento-kilabot` | Kwento: Kilabot horror Reels/Shorts (vertical 24 fps, off-screen narrator, strict no-dubbing) |
+| `ugc-ad` | Edited UGC ads with an on-camera creator, spoken prices and captions; adds the listen list and section F of the checklist |
 | `tiktok-shop-ads` | TikTok Shop UGC ads (Ate Host narration, hero clips silent, ≥ 60 s content, product must match its photo) |
 
 Pick from context (project name, folder name, what the clips show). For a new project, run `generic`,
@@ -98,7 +99,7 @@ Open single frames for a closer look when a tile is too small. Judge each warnin
 PASS only when the automatic checks passed, every warning was judged acceptable, and the visual review
 is clean. Then:
 
-1. Fill in the visual-review result in `qa_report.md` (per clip notes), so the file is a complete record.
+1. For `ugc-ad` (or any video with a spoken price, number or brand word), add a LISTEN LIST to the report: scene, timestamp and approved line for each; say plainly that exact words cannot be machine-checked. Fill in the visual-review result in `qa_report.md` (per clip notes), so the file is a complete record.
 2. Tell the user, briefly: the verdict; each failing clip — what's wrong and the cheapest fix
    (section D — for a profile with `"fix_policy": "edit_only"` only the editing fixes; never "regenerate"); warnings and how you judged
    them; anything that couldn't be checked (exact spoken words, motion between sampled frames).

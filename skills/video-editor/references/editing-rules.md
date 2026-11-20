@@ -30,3 +30,27 @@
 ## D. Hand-off
 The final video, `edit.json`, the check output and any warnings go to the owner. Quality check by Perpekto
 (`flow-clip-qa`) comes before posting; the portfolio update by Chelsea (`portfolio-updater`) comes after.
+
+## E. Edited ads with a creator on camera (UGC)
+Rules learned from the owner's corrections. Profile: `ugc-ad`.
+- **Voice before transition.** A scene's length = (speech end − scene start) / voice speed + a tail of about 0.45 s.
+  Find the true speech end by loudness first. The transition (swipe, cover, cut) starts only after that.
+  Never end a clip at or before the speech end.
+- **Audio-only fixes.** To remove a repeat or stutter, cut the audio span at silence points and shorten the scene
+  by the same length; leave the picture untouched so movement is unchanged. A missing or wrong word cannot be
+  edited in: it goes back for a new clip.
+- **Price and number clips.** One price per clip, spoken as full words. The price caption appears while it is
+  said and matches the figure exactly.
+- **Captions.** Solid pill with white text when the footage is the same colour as the text; never over the logo
+  or face. Each caption leaves before the next transition.
+- **End card.** No transition on the last scene; fade out cleanly and check the last frames.
+- **Cut-aways.** Show the product named in the line (Xpander for the Xpander line, Kia for the Kia line).
+- **Never alter** business facts (names, prices, phone number, contact lines, car details).
+- **Hand-over.** Give the owner a LISTEN LIST (scene, timestamp, approved line) for every price, number and brand
+  word, because words are not machine-checked.
+
+## F. Turning QA failures into prompt amendments
+Jaiman does not regenerate. When Perpekto fails a clip that editing cannot fix, Jaiman writes the amendment
+for the prompt writer (Senyorita, `ai-prompt-expert`) or the owner: one line naming the clip, the failure and
+the exact wording to add. The standard amendments are in `prompt-amendments.md`. Re-run the check after the new
+clip is cut in; at most two rounds, then report what still fails.

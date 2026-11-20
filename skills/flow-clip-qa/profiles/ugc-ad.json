@@ -1,0 +1,45 @@
+{
+  "name": "ugc-ad",
+  "description": "Edited UGC ads with an on-camera creator, spoken prices, on-screen captions and cut-away product shots (e.g. Nineone Car Rental). Voice must finish before each transition; exact wording and prices are checked by a listen list.",
+  "format": {
+    "orientation": "vertical",
+    "fps": 30,
+    "resolutions": [
+      [
+        720,
+        1280
+      ],
+      [
+        1080,
+        1920
+      ]
+    ],
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "max_mb": 40
+  },
+  "clip": {
+    "min_s": 5,
+    "max_s": 10
+  },
+  "final": {
+    "min_content_s": 30,
+    "max_content_s": 60
+  },
+  "speech_expected": "script",
+  "seconds_per_word": 0.42,
+  "listen_list": true,
+  "visual_checklist": [
+    "Voice finishes before every transition starts (about 0.2 s tail); no speech under a swipe or cover",
+    "Spoken lines match the approved script word for word, including small words; list every price, number, brand word and previously fixed line with timestamps for the owner to listen to",
+    "Prices are spoken as full words and match the on-screen price; one price per clip",
+    "Coined or brand words are spoken as plain words (unlimited mileage); no mispronounced terms",
+    "No repeated words, restarts or stutters; a pause of 0.25 s or more inside one line is suspect",
+    "Captions are readable over the footage (solid pill, white text over similar colours), never overlapping the logo, face or each other",
+    "End card is clean through the last frame: no stray swipe, panel or half-faded element",
+    "Business facts (names, prices, phone number, contact lines) match the brief exactly; car details are never altered",
+    "The creator has the same face, hair and clothes as the reference photo in every clip",
+    "Cut-away product shots show the right product for the line being spoken",
+    "Hands, face and mouth look natural; no text, watermark or stray logo drawn into the footage"
+  ]
+}

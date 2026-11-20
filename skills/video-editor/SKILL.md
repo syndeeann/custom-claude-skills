@@ -14,7 +14,7 @@ metadata:
     - "Measures the finished video for black or frozen frames, audio drift and out-of-sync narration"
     - "Hands the final video and its cut list to Perpekto for the quality check"
   category: production
-  version: "1.0.0"
+  version: "1.1.0"
   media: video
   projects: [kwento-kilabot, tiktok-shop-ads]
 ---
@@ -79,7 +79,7 @@ confirm the joins are continuous and the clip showing is the one the narration i
 ## 5. Hand over
 
 Tell the owner: the file, its length and clip count, the check result, anything a warning said, and what was
-not verified (for example narration was measured by loudness, not by listening). Then offer the quality check
+not verified (for example narration was measured by loudness, not by listening). For `ugc-ad`, include the LISTEN LIST (scene, timestamp, approved line for every price, number and brand word). When Perpekto fails a clip that editing cannot fix, write the prompt amendment for Senyorita or the owner using `references/prompt-amendments.md`, and do not regenerate yourself. Then offer the quality check
 by Perpekto (`flow-clip-qa`), and for a delivered video the portfolio update by Chelsea. Never commit video
 files to the repo; only the cut list (`edit.json`) may be saved, next to the script.
 
@@ -88,4 +88,5 @@ files to the repo; only the cut list (`edit.json`) may be saved, next to the scr
 - The script's order is the story's order. Re-ordering needs Marites or the owner.
 - Every narration line stays inside its own clip's window; the picture shows what the line says.
 - No glitch on a join: no black, no repeated frame, no audio pop, no change of size or speed.
+- Voice finishes before every transition; fixes to speech are audio-only cuts or a new clip, never a patched word (`references/editing-rules.md` sections E and F).
 - Report measurements, not impressions, and say what could not be measured.

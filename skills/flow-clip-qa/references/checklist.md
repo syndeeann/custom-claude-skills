@@ -124,3 +124,48 @@ Re-run `flow_qa.py` after every fix. Stop after 2 fix rounds and report what sti
   complete record.
 - Tell the user: overall verdict; each failing clip with what is wrong and the cheapest fix; warnings and
   how you judged them; what couldn't be checked (exact words, motion between frames).
+
+---
+
+## F. Edited ads and on-camera creator (UGC) videos
+
+Added from the owner's corrections on a UGC ad. Use with the `ugc-ad` profile, or with any
+profile when the video has a person speaking to camera and on-screen captions.
+
+**F1. Voice must finish before the transition.** The last spoken word of every scene ends before the
+cover, swipe or cut starts, with a short tail (about 0.2 s). Measure speech end per scene against the
+transition start; speech under a transition is a FAIL. Fix by lengthening the scene or trimming the
+transition, never by cutting the voice.
+
+**F2. Exact wording.** The spoken line must match the approved line word for word, including small
+words (e.g. "for monthly rental", not "monthly rental"). The script cannot hear words, so the report
+must list a LISTEN LIST: scene, timestamp and the approved line for every price, phone number, brand
+or product name, and every line that was fixed in an earlier round. Tell the owner to listen at those
+timestamps. A dropped or wrong word cannot be edited in: regenerate the clip with the line spelled out.
+
+**F3. Numbers and prices.** Prices and numbers are spoken as full words ("one thousand nine hundred
+fifty pesos"), one clear take per price, and the on-screen text shows the same figure. A garbled or
+rushed number is a FAIL and gets its own clip (one price per clip).
+
+**F4. Coined and brand words.** Invented or mixed words (e.g. "Unlimileage") are mispronounced by
+generated voices. Flag any coined word in the script; the spoken form must be plain words ("unlimited
+mileage"). On-screen text may keep the brand spelling.
+
+**F5. Stutters and repeats.** Look for a word or phrase said twice, restarts and false starts
+("monthly rent-- monthly rental"). Speech gaps inside one line (a pause of 0.25 s or more mid-line) are
+suspects and go on the listen list. Fix by an audio-only cut at silence points when the picture is
+unaffected (scene length shortens by the cut; the video is not cut); otherwise regenerate.
+
+**F6. Captions and logo.** Caption text must be readable over the footage: orange or coloured text over
+a similar-coloured outfit or background fails; use a solid pill with white text. Captions never overlap
+the logo, the face or each other. The logo stays in palette.
+
+**F7. Last frame.** The end card holds clean to the final frame: no stray swipe, panel or half-faded
+element on the last frames.
+
+**F8. Facts and identity.** Business details (names, prices, phone number, contact lines) match the
+approved brief exactly and are never altered. The creator keeps the same face, hair and clothes as the
+reference photo in every clip. Cut-away product shots show the right car/product for the line.
+
+**F9. Fix ladder for edited ads.** Audio-only cut (free) → re-time the scene (free) → re-download the
+right clip (free) → regenerate one clip with an amended prompt (credits). Never patch a missing word.
