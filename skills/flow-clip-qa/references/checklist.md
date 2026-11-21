@@ -103,8 +103,10 @@ Regenerating in Flow costs credits, so try free fixes first:
    word count, then regenerate only that clip.
 5. **Regenerate (costs credits):** line cut off or missing, garbled face or hands, morphing object or
    product, text in the picture, wrong scene, dubbing, a glitch in the middle of a clip → regenerate
-   only that clip, with the prompt changed to prevent the failure (e.g. "Absolutely no text …",
-   "Anyone on screen keeps their lips closed", a shorter line for a cut-off line, a simpler hand action).
+   only that clip, with the prompt changed to prevent the failure, written as what should be there
+   (a blank wall instead of a sign, "lips pressed together, eyes on the cup", the Style card pasted again,
+   a shorter line for a cut-off line, a simpler hand action). Avoid negative wording such as "no text"
+   or "no talking": generators often do the opposite.
    The same weakness is usually in other prompts too — fix the rule everywhere before generating more.
 
 **Edit-only profiles** (`"fix_policy": "edit_only"`, e.g. kwento-kilabot — the owner does not want clips or videos

@@ -3,7 +3,7 @@
 Generators change often. Anything here that bears on a decision should be re-checked against the source
 before you rely on it; the dates say when it was last read.
 
-## Google Flow (checked 2026-10-28)
+## Google Flow (checked 2026-10-28; Omni 1.2 row added 2026-11-21, re-check the help page)
 
 From Google's Flow Help page on models and supported features:
 
@@ -13,6 +13,7 @@ From Google's Flow Help page on models and supported features:
 | Veo 3.1 Fast | 4, 6, 8 s (8 s only for ingredients) | text, frames and ingredients to video |
 | Veo 3.1 Quality | 4, 6, 8 s | text and frames to video; **no ingredients** |
 | Gemini Omni Flash 1.1 | 4, 6, 8, 10 s | text, frames and ingredients to video; video-to-video editing up to 10 s |
+| Gemini Omni 1.2 Flash (added 2026-11-21, from Google's 2026-11-05 announcement) | up to 15 s; exact length options not yet checked on the Flow help page | multi-turn conversational editing, closer reference following; Omni 1.1 Flash stays during a four-week transition |
 
 All listed models support both aspect ratios (9:16 vertical and 16:9). The page doesn't say how many
 reference images are allowed or describe audio, so check in the app.

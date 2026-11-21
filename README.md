@@ -24,20 +24,23 @@ The list below is generated from each skill's `SKILL.md`. Don't edit it by hand:
 
 | Skill | Name | What it does | Media | Projects | Version |
 |---|---|---|---|---|---|
-| [`flow-clip-qa`](skills/flow-clip-qa/SKILL.md) | Perpekto | Quality-assurance check for video clips made with Google Flow (Veo, Omni) — raw clips, a folder of downloads, or an assembled Reel/ad with its cut list. | video | kwento-kilabot, tiktok-shop-ads | 1.2.0 |
+| [`flow-clip-qa`](skills/flow-clip-qa/SKILL.md) | Perpekto | Quality-assurance check for video clips made with Google Flow (Veo, Omni) in any style, photoreal or animated — raw clips, a folder of downloads, or an assembled Reel/ad… | video | kwento-kilabot, tiktok-shop-ads | 1.3.0 |
 
 ### Content creation
 
 | Skill | Name | What it does | Media | Projects | Version |
 |---|---|---|---|---|---|
-| [`ai-prompt-expert`](skills/ai-prompt-expert/SKILL.md) | Senyorita | Turns a video script or narration into clean, copy-ready generation prompts for Google Flow (Veo, Omni) and other AI video generators, built for real-life, photoreal foo… | video | kwento-kilabot, tiktok-shop-ads | 1.1.0 |
-| [`storyteller`](skills/storyteller/SKILL.md) | Marites | Writes detailed, specific, uncommon video scripts — a hook, beat-by-beat narration, and a ready-to-use visual prompt for every clip — for short-form and AI-generated vid… | text | kwento-kilabot, tiktok-shop-ads | 1.1.0 |
+| [`ai-prompt-expert`](skills/ai-prompt-expert/SKILL.md) | Senyorita | Turns a video script or narration into clean, copy-ready generation prompts for Google Flow (Veo, Omni) and other AI video generators, in any visual style the video need… | video | kwento-kilabot, tiktok-shop-ads | 1.2.0 |
+| [`storyteller`](skills/storyteller/SKILL.md) | Marites | Writes detailed, specific, uncommon video scripts — a hook, beat-by-beat narration, and a ready-to-use visual prompt for every clip — for short-form and AI-generated vid… | text | kwento-kilabot, tiktok-shop-ads | 1.2.0 |
+| [`video-look-bible`](skills/video-look-bible/SKILL.md) | – | Builds a locked look bible for an AI video project in any style (photoreal, anime, cartoon, 3D animation, claymation): character, place and product references, Style car… | image | any | 1.0.0 |
 
 ### Video production
 
 | Skill | Name | What it does | Media | Projects | Version |
 |---|---|---|---|---|---|
+| [`video-director`](skills/video-director/SKILL.md) | – | Runs a whole AI video in any style (photoreal, anime, cartoon, 3D animation, claymation) from brief to approved final: script (Marites), look bible, prompts (Senyorita),… | video | any | 1.0.0 |
 | [`video-editor`](skills/video-editor/SKILL.md) | Jaiman | Edits and compiles generated video clips (Google Flow, Veo, Omni and others) into one seamless video: puts the clips in the story order set by the script, trims and matc… | video | kwento-kilabot, tiktok-shop-ads | 1.1.0 |
+| [`video-finishing`](skills/video-finishing/SKILL.md) | – | Finishing pass for an AI-generated video in any style (photoreal, anime, cartoon, 3D animation, claymation), after Jaiman (video-editor) has cut it: matches and grades e… | video | any | 1.0.0 |
 
 ### Automation
 
