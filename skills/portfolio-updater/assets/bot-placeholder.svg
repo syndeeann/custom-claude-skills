@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Helper bot, picture coming soon">
+<defs>
+<linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e0e7ff"/><stop offset="1" stop-color="#a5b4fc"/></linearGradient>
+<linearGradient id="m" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8fafc"/><stop offset="1" stop-color="#cbd5e1"/></linearGradient>
+<clipPath id="c"><circle cx="60" cy="60" r="60"/></clipPath>
+</defs>
+<g clip-path="url(#c)">
+<rect width="120" height="120" fill="url(#g)"/>
+<path d="M18 124 C20 102 36 94 60 94 C84 94 100 102 102 124Z" fill="#334155"/>
+<rect x="50" y="98" width="20" height="8" rx="2" fill="#38bdf8"/>
+<circle cx="55" cy="102" r="1.6" fill="#0f172a"/><circle cx="60" cy="102" r="1.6" fill="#0f172a"/><circle cx="65" cy="102" r="1.6" fill="#0f172a"/>
+<rect x="53" y="80" width="14" height="14" rx="3" fill="#94a3b8"/>
+<line x1="60" y1="22" x2="60" y2="32" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
+<circle cx="60" cy="19" r="5" fill="#f97316"/>
+<rect x="25" y="48" width="8" height="18" rx="4" fill="#64748b"/>
+<rect x="87" y="48" width="8" height="18" rx="4" fill="#64748b"/>
+<rect x="31" y="31" width="58" height="52" rx="16" fill="url(#m)" stroke="#475569" stroke-width="2.5"/>
+<rect x="38" y="41" width="44" height="26" rx="10" fill="#0f172a"/>
+<ellipse cx="50" cy="54" rx="5" ry="6" fill="#38bdf8"/>
+<ellipse cx="70" cy="54" rx="5" ry="6" fill="#38bdf8"/>
+<circle cx="51.6" cy="52" r="1.6" fill="#e0f2fe"/>
+<circle cx="71.6" cy="52" r="1.6" fill="#e0f2fe"/>
+<path d="M51 73 Q60 79 69 73" fill="none" stroke="#475569" stroke-width="2.6" stroke-linecap="round"/>
+</g>
+</svg>

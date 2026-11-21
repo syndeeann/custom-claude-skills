@@ -18,7 +18,7 @@ metadata:
     - "Updates the studio workflow pipelines when a project's instructions or video flow change"
     - "Pushes the update to the live branch and to gh-pages, and checks it"
   category: automation
-  version: "1.2.0"
+  version: "1.3.0"
   media: web
   projects: [kwento-kilabot, tiktok-shop-ads, portfolio]
 ---
@@ -90,8 +90,9 @@ Use `--republish` only when the owner wants the badge restarted.
   `data/skills.json` from each skill's `metadata` (title, role, summary, responsibilities, projects, order).
   A skill that lacks those fields shows with a plain fallback and a warning; fill them in.
   It also keeps `data/team.json` (The Team I built) in step: a skill with `metadata.persona` gets a teammate with
-  that name. Existing teammates keep their avatar and title; a new one gets an initial-badge avatar in the site's
-  team assets, which the owner can replace with a drawn one.
+  that name. Existing teammates keep their avatar and title; a new one gets the placeholder bot picture
+  (copied from this skill's `assets/bot-placeholder.svg` into the site's team folder), which the owner can replace with a drawn one. Helpers with no persona
+  yet show the same bot on the site.
 - A new kind of output: `new-studio --id ID --name NAME --tagline TEXT --kind video|app --keywords a,b,c`
   adds it to My AI Studio and generates its page at `ID/`. Add `--theme NAME` (and `--accent`, `--fonts`) and write a matching `body[data-theme="NAME"]` block in the site's `themes.css` so the studio has its own vibe. Then add its pipeline to `data/workflow.json`.
 - Changed template or styles: `build-pages` regenerates every generated studio page. Hand-built pages

@@ -335,18 +335,20 @@ def cmd_sync_skills(site: Site, a: argparse.Namespace) -> int:
     return 0
 
 
-AVATAR_COLORS = [("#a5f3fc", "#818cf8"), ("#fde68a", "#f472b6"), ("#bbf7d0", "#38bdf8"), ("#fecaca", "#c084fc")]
+BOT_AVATAR = "assets/team/bot-placeholder.svg"   # placeholder until the owner adds a drawn avatar
+BOT_SOURCE = SKILL / "assets" / "bot-placeholder.svg"
 
 
 def sync_team(site: Site, skills: list) -> None:
     """Give every skill that has a metadata.persona a seat in data/team.json (the 'Team I built' section).
-    Existing members are never replaced, so hand-drawn avatars and titles survive. A new member gets a simple
-    initial badge as its avatar, saved to assets/team/, which the owner can swap for a drawn one."""
+    Existing members are never replaced, so hand-drawn avatars and titles survive. A new member gets the
+    placeholder bot picture (assets/team/bot-placeholder.svg, copied into the site if it is missing), which the
+    owner can swap for a drawn one."""
     path = site.data("team")
     doc = read_json(path, {"note": "Teammate personas for the Claude skills in skills.json, matched by skill id.", "members": {}})
     members = doc.setdefault("members", {})
     added, renamed = [], []
-    for i, s in enumerate(skills):
+    for s in skills:
         name = s.get("persona")
         if not name:
             continue
@@ -356,24 +358,16 @@ def sync_team(site: Site, skills: list) -> None:
                 cur["name"] = name
                 renamed.append(f"{s['id']} -> {name}")
             continue
-        slug = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
-        rel = f"assets/team/{slug}.svg"
+        rel = BOT_AVATAR
         svg = site.root / rel
         if not svg.exists():
-            a, b = AVATAR_COLORS[i % len(AVATAR_COLORS)]
-            label = html.escape(f"{name}, {s['name']}")
             svg.parent.mkdir(parents=True, exist_ok=True)
-            svg.write_text(
-                f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="{label}">'
-                f'<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="{a}"/>'
-                f'<stop offset="1" stop-color="{b}"/></linearGradient></defs><circle cx="60" cy="60" r="60" fill="url(#g)"/>'
-                f'<text x="60" y="76" text-anchor="middle" font-family="Sora, Arial, sans-serif" font-size="52" '
-                f'font-weight="800" fill="#0c1024">{html.escape(name[0].upper())}</text></svg>\n', encoding="utf-8")
+            svg.write_text(BOT_SOURCE.read_text(encoding="utf-8"), encoding="utf-8")
         members[s["id"]] = {"name": name, "title": s["name"], "avatar": rel}
         added.append(name)
     write_json(path, doc)
     if added:
-        print("data/team.json: added " + ", ".join(added) + " (initial-badge avatar; swap in a drawn one in assets/team/ if wanted)")
+        print("data/team.json: added " + ", ".join(added) + " (placeholder bot picture; swap in a drawn one in assets/team/ if wanted)")
     if renamed:
         print("data/team.json: renamed " + ", ".join(renamed))
     if not added and not renamed:
