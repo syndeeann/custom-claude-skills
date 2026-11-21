@@ -9,9 +9,14 @@ Angge picks it up (gh issue list) -> `run init` -> `run step` ... -> `run review
 approval = issue "Approve: <id>" (label video-approval) or "approve" in chat -> Chelsea adds the video -> `run status published`
 ```
 
-The page polls `data/runs/<id>.json` every 10 seconds and animates the team: the helper whose step is
-`working` bobs and shows a speech bubble, finished steps get a tick and a lit connector, and a packet runs down
-the rail into the next step. A step with no `working` status stays dim.
+The page polls `data/runs/<id>.json` every 10 seconds and plays the team as a studio floor: Angge sits at the
+briefing table in the middle and the helpers' desks ring it. When the brief starts, everyone gathers at the
+table; when it is done they return to their desks and the first helper starts working (her desk glows, a small
+prop shows the kind of work, a speech bubble shows her note, Angge's beam points at her). When a step finishes,
+that helper picks up the result, walks it to the next helper's desk, hands it over and walks back; if the
+previous step had no helper (the generator, or the owner) the next helper fetches it. A reload in the middle of
+a run puts everyone straight into place without walking. The step list under the scene carries the same
+information as text. `assets/desk-scene.js` is the scene, `assets/desk.js` the page.
 
 ## Files
 - `data/desk.json`: the form options (tools, types, looks, lengths, platforms) and the `steps` of the workflow, each with
