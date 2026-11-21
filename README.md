@@ -41,7 +41,7 @@ The list below is generated from each skill's `SKILL.md`. Don't edit it by hand:
 
 | Skill | Name | What it does | Media | Projects | Version |
 |---|---|---|---|---|---|
-| [`video-director`](skills/video-director/SKILL.md) | Angge | The owner's video-creation workflow for every project: when they ask for any video, episode, ad, reel or short, Angge runs the whole job so they never have to call a hel… | video | any | 1.1.0 |
+| [`video-director`](skills/video-director/SKILL.md) | Angge | The owner's video-creation workflow for every project: when they ask for any video, episode, ad, reel or short, Angge runs the whole job so they never have to call a hel… | video | any | 1.2.0 |
 | [`video-editor`](skills/video-editor/SKILL.md) | Jaiman | Edits and compiles generated video clips (Google Flow, Veo, Omni and others) into one seamless video: puts the clips in the story order set by the script, trims and matc… | video | kwento-kilabot, tiktok-shop-ads | 1.1.0 |
 | [`video-finishing`](skills/video-finishing/SKILL.md) | Etel | Finishing pass for an AI-generated video in any style (photoreal, anime, cartoon, 3D animation, claymation), after Jaiman (video-editor) has cut it: matches and grades e… | video | any | 1.0.1 |
 
@@ -49,7 +49,7 @@ The list below is generated from each skill's `SKILL.md`. Don't edit it by hand:
 
 | Skill | Name | What it does | Media | Projects | Version |
 |---|---|---|---|---|---|
-| [`portfolio-updater`](skills/portfolio-updater/SKILL.md) | Chelsea | Updates the owner's static GitHub Pages portfolio every time a new video or app is delivered: adds it to the right studio in My AI Studio (Ads Videos, Kids, Stories, App… | web | kwento-kilabot, tiktok-shop-ads, portfolio | 1.3.0 |
+| [`portfolio-updater`](skills/portfolio-updater/SKILL.md) | Chelsea | Updates the owner's static GitHub Pages portfolio every time a new video or app is delivered: adds it to the right studio in My AI Studio (Ads Videos, Kids, Stories, App… | web | kwento-kilabot, tiktok-shop-ads, portfolio | 1.4.0 |
 <!-- skills:end -->
 
 ## Layout

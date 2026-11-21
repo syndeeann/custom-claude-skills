@@ -18,7 +18,7 @@ metadata:
     - "Updates the studio workflow pipelines when a project's instructions or video flow change"
     - "Pushes the update to the live branch and to gh-pages, and checks it"
   category: automation
-  version: "1.3.0"
+  version: "1.4.0"
   media: web
   projects: [kwento-kilabot, tiktok-shop-ads, portfolio]
 ---
@@ -51,6 +51,13 @@ Projects tool when one is attached), compare them with the site's data, and chan
 
 Every one of these ends with `publish`, which pushes to `feature/portfolio-v4` and mirrors the same files to
 `gh-pages`, so the live portfolio shows the change. Say what changed and what could not be verified.
+
+## The Video Desk
+
+The site has a Video Desk page (`/desk/`) where the owner asks for a video and watches the helpers work. Angge
+keeps its run records current with `run` commands, and Chelsea publishes them and adds the video to the portfolio
+once the owner approves it there. The format, commands and rules are in `references/desk.md`. When the
+video workflow changes, update `data/desk.json` steps together with `data/workflow.json`.
 
 ## 1. Get the site
 

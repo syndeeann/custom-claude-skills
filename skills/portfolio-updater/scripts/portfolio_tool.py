@@ -7,6 +7,7 @@
     add          --run-dir DIR | --title T ...                  add one delivered video or app
     sync-skills  --skills-repo DIR                              rebuild data/skills.json and data/team.json from the skills repo
     new-studio   --id ID --name N --tagline T [--kind video|app] [--keywords a,b]
+    run          init|step|review|status|log --id ID ...                 update a Video Desk request (who is working, review, published)
     build-pages                                                 (re)generate every studio page from the template
     check                                                       verify the data, the pages and the hooks
     analytics    sync | check | confirm [--gtm --ga4 --looker]   keep analytics, Tag Manager export and Looker guide current
@@ -25,7 +26,7 @@ import json
 import re
 import subprocess
 import sys
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -500,6 +501,7 @@ def cmd_check(site: Site, _: argparse.Namespace) -> int:
             warns.append("index.html has no GitHub link")
     else:
         errs.append("index.html is missing")
+    check_runs(site, errs)
     print(f"{len(d['videos']['items'])} item(s), {fresh} inside the {days}-day NEW window, {len(studios)} studio(s), {len(skills)} skill(s)")
     a_changes, a_pending, a_errors = analytics(site, write=False)
     errs += a_errors
@@ -857,6 +859,144 @@ def cmd_publish(site: Site, a: argparse.Namespace) -> int:
     return 0
 
 
+# ------------------------------------------------------------------------------------------------- video desk runs
+RUN_STATUSES = ("queued", "working", "review", "changes", "approved", "published", "failed", "cancelled")
+STEP_STATUSES = ("pending", "working", "done", "failed", "skipped")
+
+
+def now_iso() -> str:
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def run_path(site: Site, rid: str) -> Path:
+    if not re.fullmatch(r"[\w-]{3,60}", rid):
+        die(f"run id '{rid}' must be letters, digits, - or _")
+    return site.root / "data" / "runs" / f"{rid}.json"
+
+
+def desk_steps(site: Site) -> list[dict]:
+    desk = read_json(site.data("desk"), None)
+    if not desk:
+        die("data/desk.json is missing (the Video Desk is not set up on this site)")
+    return desk["steps"]
+
+
+def save_run(site: Site, run: dict) -> None:
+    run["updated"] = now_iso()
+    write_json(run_path(site, run["id"]), run)
+    idx_path = site.root / "data" / "runs" / "index.json"
+    idx = read_json(idx_path, {"runs": []})
+    rows = [r for r in idx.get("runs", []) if r.get("id") != run["id"]]
+    rows.append({"id": run["id"], "title": run.get("title", run["id"]), "status": run["status"],
+                 "created": run.get("created", ""), "updated": run["updated"]})
+    rows.sort(key=lambda r: r.get("updated", ""), reverse=True)
+    write_json(idx_path, {"runs": rows[:50]})
+
+
+def load_run(site: Site, rid: str) -> dict:
+    r = read_json(run_path(site, rid), None)
+    if r is None:
+        die(f"no run {rid}: start it with 'run init'")
+    return r
+
+
+def add_log(run: dict, text: str) -> None:
+    run.setdefault("log", []).append({"t": now_iso(), "text": text[:200]})
+    run["log"] = run["log"][-60:]
+
+
+def cmd_run(site: Site, a: argparse.Namespace) -> int:
+    steps = desk_steps(site)
+    keys = [s["key"] for s in steps]
+    act = a.action
+    if act == "init":
+        src = sys.stdin.read() if a.brief_json == "-" else Path(a.brief_json).read_text(encoding="utf-8")
+        brief = json.loads(src)
+        brief.pop("id", None)
+        title = a.title or " ".join(str(brief.get("idea", a.id)).split())[:70]
+        run = {"id": a.id, "created": now_iso(), "status": "queued", "title": title, "brief": brief,
+               "steps": [{"key": k, "status": "pending"} for k in keys], "log": []}
+        add_log(run, "Request received")
+    else:
+        run = load_run(site, a.id)
+    if act == "step":
+        if a.step not in keys:
+            die(f"step must be one of: {', '.join(keys)}")
+        if a.status not in STEP_STATUSES:
+            die(f"--status must be one of: {', '.join(STEP_STATUSES)}")
+        row = next(s for s in run["steps"] if s["key"] == a.step)
+        row["status"] = a.status
+        if a.note is not None:
+            row["note"] = a.note[:160]
+        elif a.status != "working":
+            row.pop("note", None)
+        if a.status == "working":
+            run["status"] = "working"
+        if a.status == "failed":
+            run["status"] = "failed"
+            run["note"] = a.note or f"{a.step} failed"
+        add_log(run, f"{a.step}: {a.status}" + (f" ({a.note})" if a.note else ""))
+    elif act == "review":
+        if not (a.youtube or a.src):
+            die("give --youtube ID or --src PATH for the video to approve")
+        for s in run["steps"]:
+            if s["key"] in keys[: keys.index("approve")] and s["status"] in ("pending", "working"):
+                s["status"] = "done"
+        appr = next(s for s in run["steps"] if s["key"] == "approve")
+        appr["status"], appr["note"] = "working", "Waiting for you to watch it"
+        run["status"] = "review"
+        run["review"] = {k: v for k, v in {"youtube": a.youtube, "src": a.src, "notes": a.notes, "aspect": a.aspect}.items() if v}
+        add_log(run, "Ready for your approval")
+    elif act == "status":
+        if a.status not in RUN_STATUSES:
+            die(f"--status must be one of: {', '.join(RUN_STATUSES)}")
+        run["status"] = a.status
+        if a.note:
+            run["note"] = a.note[:160]
+        if a.status in ("approved", "changes"):
+            appr = next(s for s in run["steps"] if s["key"] == "approve")
+            appr["status"] = "done" if a.status == "approved" else "working"
+            if a.status == "changes":
+                appr["note"] = "Changes requested"
+        if a.status == "published":
+            for s in run["steps"]:
+                if s["key"] in ("approve", "publish"):
+                    s["status"] = "done"
+                    s.pop("note", None)
+            run.pop("review", None)
+        add_log(run, f"status: {a.status}" + (f" ({a.note})" if a.note else ""))
+    elif act == "log":
+        add_log(run, a.text)
+    save_run(site, run)
+    print(f"{act}: {run['id']} is {run['status']}")
+    return 0
+
+
+def check_runs(site: Site, errs: list[str]) -> None:
+    runs = site.root / "data" / "runs"
+    if not runs.exists():
+        return
+    desk = read_json(site.data("desk"), None)
+    if desk is None:
+        errs.append("data/runs exists but data/desk.json is missing")
+        return
+    keys = {s["key"] for s in desk["steps"]}
+    skills = {s["id"] for s in (read_json(site.data("skills"), {}) or {}).get("skills", [])}
+    for s in desk["steps"]:
+        if s.get("skill") and skills and s["skill"] not in skills:
+            errs.append(f"desk.json step '{s['key']}' uses skill '{s['skill']}', which is not in skills.json")
+    for f in runs.glob("*.json"):
+        if f.name == "index.json":
+            continue
+        r = read_json(f, None)
+        if not isinstance(r, dict) or r.get("status") not in RUN_STATUSES:
+            errs.append(f"{f.name}: not a valid run record")
+            continue
+        for s in r.get("steps", []):
+            if s.get("key") not in keys or s.get("status") not in STEP_STATUSES:
+                errs.append(f"{f.name}: bad step {s}")
+
+
 # ------------------------------------------------------------------------------------------------- cli
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -882,6 +1022,13 @@ def main() -> int:
     c = sub.add_parser("sync-skills")
     c.add_argument("--skills-repo", required=True); c.add_argument("--repo-url")
     c.set_defaults(fn=cmd_sync_skills)
+
+    c = sub.add_parser("run", help="update a Video Desk request so the page shows who is working")
+    c.add_argument("action", choices=["init", "step", "review", "status", "log"])
+    c.add_argument("--id", required=True); c.add_argument("--brief-json", help="init: the request as JSON, or - for stdin"); c.add_argument("--title")
+    c.add_argument("--step"); c.add_argument("--status"); c.add_argument("--note"); c.add_argument("--text")
+    c.add_argument("--youtube"); c.add_argument("--src"); c.add_argument("--notes"); c.add_argument("--aspect", choices=["9:16", "16:9"])
+    c.set_defaults(fn=cmd_run)
 
     c = sub.add_parser("new-studio")
     c.add_argument("--id", required=True); c.add_argument("--name", required=True); c.add_argument("--tagline", required=True)
