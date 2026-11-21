@@ -1,8 +1,9 @@
 ---
 name: video-look-bible
-description: "Builds a locked look bible for an AI video project in any style (photoreal, anime, cartoon, 3D animation, claymation): character, place and product references, Style card, palette and light, before any clip is made. Use it whenever a video has a recurring character, place, product or mascot, when the owner wants a new style or cast for a project, or when clips don't match each other from shot to shot."
+description: "Also called Cassey: when the owner says Cassey, this is the skill they mean. Builds a locked look bible for an AI video project in any style (photoreal, anime, cartoon, 3D animation, claymation): character, place and product references, Style card, palette and light, before any clip is made. Use it whenever a video has a recurring character, place, product or mascot, when the owner wants a new style or cast for a project, or when clips don't match each other from shot to shot."
 metadata:
   title: Look Bible
+  persona: Cassey
   role: Continuity and style keeper
   order: 6
   summary: "Locks the style, characters, places and products of a video before any clip is generated, so every clip matches."
@@ -13,7 +14,7 @@ metadata:
     - "Keeps characters original, never copied from a studio or brand"
     - "Saves the bible where Marites, Senyorita and Perpekto can find it"
   category: content
-  version: "1.0.0"
+  version: "1.0.1"
   media: image
   projects: []
 ---

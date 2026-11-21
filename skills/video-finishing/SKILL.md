@@ -1,8 +1,9 @@
 ---
 name: video-finishing
-description: "Finishing pass for an AI-generated video in any style (photoreal, anime, cartoon, 3D animation, claymation), after Jaiman (video-editor) has cut it: matches and grades every shot, adds the style's texture (grain only for real-life footage), sound design, real captions, prices, logos and end cards, sets loudness, and hands the final to Perpekto. Use it whenever the owner wants a cut video to look and sound finished, says a video looks plastic, fake, flat or too clean, or asks for captions, an end card or sound effects."
+description: "Also called Etel: when the owner says Etel, this is the skill they mean. Finishing pass for an AI-generated video in any style (photoreal, anime, cartoon, 3D animation, claymation), after Jaiman (video-editor) has cut it: matches and grades every shot, adds the style's texture (grain only for real-life footage), sound design, real captions, prices, logos and end cards, sets loudness, and hands the final to Perpekto. Use it whenever the owner wants a cut video to look and sound finished, says a video looks plastic, fake, flat or too clean, or asks for captions, an end card or sound effects."
 metadata:
   title: Video Finishing
+  persona: Etel
   role: Colourist and sound designer
   order: 7
   summary: "Gives a cut video its final look and sound for its style: grade, texture, sound design, real captions and end cards."
@@ -13,7 +14,7 @@ metadata:
     - "Adds captions, prices, phone numbers, logos and end cards as real text"
     - "Keeps Flow's watermark and provenance data, and hands the final to Perpekto"
   category: production
-  version: "1.0.0"
+  version: "1.0.1"
   media: video
   projects: []
 ---

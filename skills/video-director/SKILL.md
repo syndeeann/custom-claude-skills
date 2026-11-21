@@ -1,8 +1,9 @@
 ---
 name: video-director
-description: "Runs a whole AI video in any style (photoreal, anime, cartoon, 3D animation, claymation) from brief to approved final: script (Marites), look bible, prompts (Senyorita), generation, raw QA (Perpekto), cut (Jaiman), finishing, final QA and the owner's approval, then the portfolio (Chelsea). Use it whenever the owner wants a complete video or a new episode or ad made end to end, or asks what the next step of a video is."
+description: "Also called Angge: when the owner says Angge, this is the skill they mean. Runs a whole AI video in any style (photoreal, anime, cartoon, 3D animation, claymation) from brief to approved final: script (Marites), look bible, prompts (Senyorita), generation, raw QA (Perpekto), cut (Jaiman), finishing, final QA and the owner's approval, then the portfolio (Chelsea). Use it whenever the owner wants a complete video or a new episode or ad made end to end, or asks what the next step of a video is."
 metadata:
   title: Video Director
+  persona: Angge
   role: Director and producer
   order: 0
   summary: "Runs every helper in order, from the brief to the approved final video, and stops at the owner's approval gates."
@@ -13,7 +14,7 @@ metadata:
     - "Holds every video to the quality bar for its style"
     - "Never posts anything until the owner has watched and approved the final"
   category: production
-  version: "1.0.0"
+  version: "1.0.1"
   media: video
   projects: []
 ---
