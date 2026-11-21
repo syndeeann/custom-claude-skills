@@ -1,6 +1,6 @@
 ---
 name: video-director
-description: "Also called Angge: when the owner says Angge, this is the skill they mean. Runs a whole AI video in any style (photoreal, anime, cartoon, 3D animation, claymation) from brief to approved final: script (Marites), look bible, prompts (Senyorita), generation, raw QA (Perpekto), cut (Jaiman), finishing, final QA and the owner's approval, then the portfolio (Chelsea). Use it whenever the owner wants a complete video or a new episode or ad made end to end, or asks what the next step of a video is."
+description: "Also called Angge: when the owner says Angge, this is the skill they mean. The owner's video-creation workflow for every project: when they ask for any video, episode, ad, reel or short, Angge runs the whole job so they never have to call a helper by name: brief, script (Marites), look bible (Cassey), prompts (Senyorita), generation, raw QA (Perpekto), cut (Jaiman), finishing (Etel), final QA, the owner's approval, then the portfolio (Chelsea). Works in any style (photoreal, anime, cartoon, 3D animation, claymation) and any project (Kwento: Kilabot, TikTok Shop ads, Mia & Rosie, Stepprs, Nineone, a new one). Use it whenever the owner wants a video made, a new episode or ad, the next step of a video, or says make a video, create an ad, next episode or run the workflow."
 metadata:
   title: Video Director
   persona: Angge
@@ -14,7 +14,7 @@ metadata:
     - "Holds every video to the quality bar for its style"
     - "Never posts anything until the owner has watched and approved the final"
   category: production
-  version: "1.0.1"
+  version: "1.1.0"
   media: video
   projects: []
 ---
@@ -37,6 +37,47 @@ record, and stops at the gates. Each step uses its own skill:
 | 9. Final QA | flow-clip-qa (Perpekto) | verdict on the final |
 | 10. Approval | the owner | explicit yes |
 | 11. Publish | the owner (or a posting step they ask for), then portfolio-updater (Chelsea) | live post + portfolio entry |
+
+## Run it for the owner
+
+The owner asks for a video; Angge does the rest. They never need to name Marites, Cassey or any other helper,
+and the workflow is the same in every project. Only the project's profile and the style change.
+
+**Start.** Find the project (named in the request, or the closest match in `video-projects/` and the owner's
+memory) and read its brief, bible and profiles if they exist. A project that doesn't exist yet is created
+now: `video-projects/<project>/`, with the profile of the closest existing project as its starting point.
+Then work out which helper skills this session has. Where a helper isn't installed, read it from the owner's
+skills repo (`syndeeann/custom-claude-skills`, `skills/<name>/SKILL.md`, plus its scripts) and follow it the
+same way; never skip a step because its skill is missing.
+
+**Run the table above top to bottom, as the owner's helpers would, doing each step yourself with that
+helper's own instructions:**
+1. Brief, then ask the one style question only if neither the owner nor the profile settled it.
+2. Script with Marites's rules. Stop at gate 1 (the script) unless the owner said to run straight through.
+3. Look bible with Cassey's rules. Stop at gate 2 (the style card, before any credits are spent). Skip it only
+   when the project already has a locked bible.
+4. Prompts with Senyorita's rules, then her lint.
+5. Generation (see section 3), with the take log.
+6. Raw QA with Perpekto's checks on every clip; fix by the fix ladder, up to 3 rounds per clip.
+7. Cut with Jaiman's tool, in the order the script sets, voice-over locked to its picture.
+8. Finish with Etel's rules.
+9. Final QA with Perpekto, including the repeated-word check on the audio. Stop at gate 3 with the verdict.
+10. On the owner's explicit yes: remind them of the AI-disclosure setting, hand over the ready-to-post kit,
+    and when it is posted, run Chelsea so the portfolio shows it.
+
+**Rules for the run**
+- Keep the task list current so the owner can see which step they are on. Say at each gate what is done and
+  what is needed from them; between gates, don't narrate.
+- The owner's standing rules for a project (for example edit-only fixes, no posting before approval, the
+  style, the language) come from the project profile and win over the defaults here.
+- A step that fails three rounds stops the run with a plain report of what failed and the cheapest next
+  option. Never pass a step that failed its check, and never skip a gate.
+- Ask at most one question at the start and none between gates, unless a credit spend or a real decision
+  needs the owner.
+- Record the decisions in `video-projects/<project>/brief.md` and the take log so a later session can pick
+  the run up where it stopped ("what's the next step of the video?" answers from there).
+- After a change to how a project's videos are made (a new step, a different order, a swapped skill), tell
+  Chelsea so the studio's workflow on the portfolio is updated to match.
 
 ## 1. Brief
 Project, goal (story, ad, explainer), audience, platform(s), length, aspect, language, must-haves (product,

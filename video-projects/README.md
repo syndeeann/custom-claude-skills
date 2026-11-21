@@ -7,6 +7,9 @@ saves the generation prompts for each script (created the first time it runs).
 ```
 video-projects/
   <project>/                       lowercase-with-hyphens, e.g. kwento-kilabot
+    brief.md                           the director's brief and decisions (video-director)
+    bible/                             the look bible (video-look-bible)
+    takes/                             the take log per video (video-director)
     script/
       001-<topic-slug>.md              the script: angle, look anchors, clip-by-clip lines and draft visuals
       001-<topic-slug>.prompts.json    exported from the .md by the storyteller's lint, for the QA skills
