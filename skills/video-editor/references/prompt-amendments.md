@@ -9,7 +9,7 @@ stay the same.
 | Line cut off, speech runs to the clip end | Shorten the line; add "She finishes speaking by about six seconds, then smiles and holds still." |
 | A word is dropped (e.g. "for") or wrong | Put the exact line in quotes, and add "She says it exactly like that, word for word, with no words added or left out." |
 | Stutter, repeat or restart | Add "She says it smoothly, clearly and only once, with no repeated words, no stuttering and no restarts." |
-| Price garbled | One price per clip. Spell it in words ("one thousand nine hundred fifty pesos for monthly rental"). Add "She says the number slowly and clearly." |
+| Price garbled or said stiffly ("one thousand nine hundred fifty") | One price per clip. Write the natural spoken form in the line ("nineteen fifty pesos per day") and add "1,950 is said as nineteen fifty, not one thousand nine hundred fifty." Add "She says the number clearly." |
 | Coined or brand word mispronounced | Spell it as plain words ("unlimited mileage"); keep the brand spelling for on-screen text only. |
 | Face differs from the reference | Add "Keep her face, hair and clothes identical to the attached photo." |
 | Text, subtitles, watermark in the picture | Add "No subtitles, no text, no watermarks, no logos." |

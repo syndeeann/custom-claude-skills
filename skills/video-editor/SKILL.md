@@ -14,7 +14,7 @@ metadata:
     - "Measures the finished video for black or frozen frames, audio drift and out-of-sync narration"
     - "Hands the final video and its cut list to Perpekto for the quality check"
   category: production
-  version: "1.1.0"
+  version: "1.2.0"
   media: video
   projects: [kwento-kilabot, tiktok-shop-ads]
 ---

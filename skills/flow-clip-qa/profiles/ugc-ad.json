@@ -32,7 +32,7 @@
   "visual_checklist": [
     "Voice finishes before every transition starts (about 0.2 s tail); no speech under a swipe or cover",
     "Spoken lines match the approved script word for word, including small words; list every price, number, brand word and previously fixed line with timestamps for the owner to listen to",
-    "Prices are spoken as full words and match the on-screen price; one price per clip",
+    "Prices and numbers are spoken as words in the natural spoken form of the audience (e.g. 1,950 is \"nineteen fifty\", not \"one thousand nine hundred fifty\"), with the unit after the number; one price per clip; the on-screen digits match",
     "Coined or brand words are spoken as plain words (unlimited mileage); no mispronounced terms",
     "No repeated words, restarts or stutters; a pause of 0.25 s or more inside one line is suspect",
     "Captions are readable over the footage (solid pill, white text over similar colours), never overlapping the logo, face or each other",
