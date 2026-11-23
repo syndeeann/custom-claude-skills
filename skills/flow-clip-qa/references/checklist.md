@@ -145,17 +145,16 @@ must list a LISTEN LIST: scene, timestamp and the approved line for every price,
 or product name, and every line that was fixed in an earlier round. Tell the owner to listen at those
 timestamps. A dropped or wrong word cannot be edited in: regenerate the clip with the line spelled out.
 
-**F3. Numbers and prices.** Prices and numbers are spoken as words in the natural spoken form of the audience (see F3b), one clear take per price, and the on-screen text shows the same figure. A garbled or
+**F3. Numbers and prices.** Prices and numbers are spoken as words, in the exact full form the owner specifies (see F3b), one clear take per price, and the on-screen text shows the same figure. A garbled or
 rushed number is a FAIL and gets its own clip (one price per clip).
 
-**F3b. Natural price pronunciation.** Prices and numbers must be said the way people in the audience say
-them aloud, not read out digit by digit or in formal long form. Philippine example: 1,950 is "nineteen fifty",
-1,650 is "sixteen fifty", 550 is "five fifty", 1,350 is "thirteen fifty", and the unit ("pesos", "per day") is
-said after the number. "One thousand nine hundred fifty" sounds wrong and fails. For each price in the script,
-write the spoken form on the listen list (e.g. "1,950 -> nineteen fifty pesos per day") and check the audio against
-that form by ear; the script can't hear it. The on-screen figure stays in digits. If the pronunciation is wrong,
-regenerate with the spoken form written into the prompt and the digits explained ("1,950 is said as nineteen fifty,
-not one thousand nine hundred fifty").
+**F3b. Price pronunciation — read it exactly as the owner says it.** Prices are spoken in the full form the
+owner specifies, never a shortened form that Flow or the checker guesses. Use the exact spoken forms in the profile's `price_pronunciation` (full cardinal numbers, e.g. one thousand nine hundred fifty); the unit ("pesos", "per day") follows the number. Shortened or clipped forms (for example "nineteen
+fifty" for 1,950) fail, and so do garbled or rushed numbers. Never "correct" a price into a form the owner did not give;
+if unsure how the owner wants a number said, ask. For each price on the listen list write the exact expected
+spoken form (e.g. "1,950 -> one thousand nine hundred fifty pesos per day") and have the owner check it by ear,
+because the script cannot hear it. On a fail, regenerate with the full spoken form written out in the prompt and
+a line such as "She says each number in full, slowly and clearly, one word at a time."
 
 **F4. Coined and brand words.** Invented or mixed words (e.g. "Unlimileage") are mispronounced by
 generated voices. Flag any coined word in the script; the spoken form must be plain words ("unlimited

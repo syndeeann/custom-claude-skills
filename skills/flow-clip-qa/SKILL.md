@@ -15,7 +15,7 @@ metadata:
     - "Spots lip-sync dubbing, and repeated words in the script and in the audio itself"
     - "Reports a verdict with evidence, and never posts or regenerates"
   category: qa
-  version: "1.3.0"
+  version: "1.3.1"
   media: video
   projects: [kwento-kilabot, tiktok-shop-ads]
 ---

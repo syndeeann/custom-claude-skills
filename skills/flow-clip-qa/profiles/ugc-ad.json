@@ -32,7 +32,7 @@
   "visual_checklist": [
     "Voice finishes before every transition starts (about 0.2 s tail); no speech under a swipe or cover",
     "Spoken lines match the approved script word for word, including small words; list every price, number, brand word and previously fixed line with timestamps for the owner to listen to",
-    "Prices and numbers are spoken as words in the natural spoken form of the audience (e.g. 1,950 is \"nineteen fifty\", not \"one thousand nine hundred fifty\"), with the unit after the number; one price per clip; the on-screen digits match",
+    "Prices and numbers are spoken in the exact full form the owner specifies (e.g. 1,950 is \"one thousand nine hundred fifty\", never a shortened form), unit after the number, one price per clip, on-screen digits match; every price goes on the listen list with its expected spoken form",
     "Coined or brand words are spoken as plain words (unlimited mileage); no mispronounced terms",
     "No repeated words, restarts or stutters; a pause of 0.25 s or more inside one line is suspect",
     "Captions are readable over the footage (solid pill, white text over similar colours), never overlapping the logo, face or each other",
@@ -41,5 +41,13 @@
     "The creator has the same face, hair and clothes as the reference photo in every clip",
     "Cut-away product shots show the right product for the line being spoken",
     "Hands, face and mouth look natural; no text, watermark or stray logo drawn into the footage"
-  ]
+  ],
+  "price_pronunciation": {
+    "1,950": "one thousand nine hundred fifty",
+    "1,650": "one thousand six hundred fifty",
+    "1,550": "one thousand five hundred fifty",
+    "1,350": "one thousand three hundred fifty",
+    "550": "five hundred fifty",
+    "250": "two hundred fifty"
+  }
 }

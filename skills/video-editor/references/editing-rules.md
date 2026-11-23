@@ -39,7 +39,7 @@ Rules learned from the owner's corrections. Profile: `ugc-ad`.
 - **Audio-only fixes.** To remove a repeat or stutter, cut the audio span at silence points and shorten the scene
   by the same length; leave the picture untouched so movement is unchanged. A missing or wrong word cannot be
   edited in: it goes back for a new clip.
-- **Price and number clips.** One price per clip, spoken in the natural spoken form (1,950 = "nineteen fifty"). The price caption appears while it is
+- **Price and number clips.** One price per clip, spoken in the exact full form the owner gave (1,950 = "one thousand nine hundred fifty"). The price caption appears while it is
   said and matches the figure exactly.
 - **Captions.** Solid pill with white text when the footage is the same colour as the text; never over the logo
   or face. Each caption leaves before the next transition.
